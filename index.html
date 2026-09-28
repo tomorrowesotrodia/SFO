@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>舊金山五天四夜高執行力旅遊手冊 (更新版)</title>
+    <style>
+        :root {
+            --primary-color: #1A2C42; /* 海軍藍 */
+            --secondary-color: #6A4A4D; /* 不飽和酒紅 */
+            --accent-color: #805A5D; /* 淺酒紅 */
+            --background-color: #f4f5f7;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #d1d5db;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin: 0 0 5px 0; font-size: 1.5rem; }
+        .subtitle { font-size: 0.9rem; opacity: 0.9; margin: 0; }
+
+        .info-box {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 0.95rem;
+        }
+
+        .budget-tracker { border-left-color: var(--primary-color); background-color: #f0f4f8; }
+        .budget-stats {
+            display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px; font-size: 1rem;
+        }
+        .budget-stats .remaining { color: #27ae60; }
+
+        /* 重置 iOS 預設按鈕與輸入框樣式，強制高度與字體大小防縮放 */
+        input[type="text"], input[type="number"], button {
+            -webkit-appearance: none;
+            appearance: none;
+            box-sizing: border-box;
+            height: 48px; 
+            font-size: 16px !important; 
+            border-radius: 8px;
+            margin: 0;
+            outline: none;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 0 15px;
+            border: 1px solid var(--border-color);
+            background-color: #ffffff;
+            color: var(--text-color);
+            width: 100%;
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            font-weight: bold;
+            padding: 0 15px;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+        button:active { background-color: var(--accent-color); }
+
+        .expense-input { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .expense-amount-row { display: flex; gap: 10px; width: 100%; }
+        .expense-amount-row input { flex: 1.5; }
+        .expense-amount-row button { flex: 1; }
+
+        .inline-expense-container {
+            display: flex; flex-direction: column; gap: 10px; margin-top: 15px; padding-top: 15px;
+            border-top: 1px dashed var(--border-color); width: 100%;
+        }
+        .inline-action-row { display: flex; gap: 10px; width: 100%; }
+        .inline-action-row input { flex: 1.5; }
+        .inline-action-row button { flex: 1; }
+
+        .expense-list { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
+        .expense-list li {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid #e0e0e0; font-size: 0.9rem;
+        }
+        .expense-list li:last-child { border-bottom: none; }
+        .delete-btn { color: #e74c3c; background: none; border: none; font-size: 1.2rem; height: auto; padding: 0 10px; width: auto; }
+
+        .day-card { background: var(--card-bg); border-radius: 8px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .day-header {
+            background-color: var(--secondary-color); color: white; padding: 15px; margin: 0; font-size: 1.1rem;
+            display: flex; flex-direction: column;
+        }
+        .day-header span:last-child { font-size: 0.9rem; opacity: 0.9; margin-top: 4px; }
+
+        .timeline { padding: 0; margin: 0; list-style: none; }
+        .timeline-item { display: flex; padding: 15px; border-bottom: 1px solid var(--border-color); flex-direction: column; }
+        .timeline-item:last-child { border-bottom: none; }
+
+        .time-col { font-weight: bold; color: var(--primary-color); font-size: 0.95rem; margin-bottom: 5px; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px; }
+        .content-col { flex: 1; }
+        .location-title { margin: 0 0 8px 0; font-size: 1.05rem; color: var(--primary-color); }
+        .description-text { font-size: 0.9rem; color: #555; margin-bottom: 10px; }
+
+        .nav-btn {
+            display: inline-flex; align-items: center; justify-content: center; background-color: var(--accent-color);
+            color: white; text-decoration: none; padding: 10px 15px; border-radius: 8px; font-size: 0.9rem; font-weight: 500;
+            margin-top: 5px; margin-bottom: 10px; width: 100%; box-sizing: border-box;
+        }
+        .nav-icon { margin-right: 8px; font-size: 1.1rem;}
+
+        .food-recommendation { background-color: #f8f4f4; padding: 10px 12px; border-radius: 6px; font-size: 0.9rem; margin-top: 5px; border-left: 3px solid var(--secondary-color); }
+        .food-title { font-weight: bold; color: var(--secondary-color); margin-bottom: 3px; display: block; }
+        .highlight-tag { display: inline-block; background-color: #ffd700; color: #333; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-left: 5px; vertical-align: middle;}
+        .warning-text { color: #d32f2f; font-weight: bold; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🌉 舊金山五天四夜行程</h1>
+        <p class="subtitle">2026/11/12 - 11/16</p>
+    </header>
+
+    <div class="info-box budget-tracker">
+        <h3 style="margin-top: 0; margin-bottom: 15px; color: var(--primary-color);">💰 預算控管</h3>
+        <div class="budget-stats">
+            <div>總預算: $<span id="total-budget">528</span></div>
+            <div>已花: $<span id="total-spent">0</span></div>
+            <div class="remaining">剩餘: $<span id="remaining-budget">528</span></div>
+        </div>
+        <div class="expense-input">
+            <input type="text" id="expense-name" placeholder="項目 (例: 晚餐)">
+            <div class="expense-amount-row">
+                <input type="number" id="expense-amount" placeholder="金額 ($)" step="0.01">
+                <button onclick="addExpense()">記一筆</button>
+            </div>
+        </div>
+        <ul id="expense-list" class="expense-list"></ul>
+    </div>
+
+    <!-- Day 1 remains unchanged -->
+    <div class="day-card">
+        <h2 class="day-header">
+            <span>Day 1 (11/12 週四)</span>
+            <span>出發與市政中心</span>
+        </h2>
+        <ul class="timeline">
+            <li class="timeline-item"><div class="time-col">06:30</div><div class="content-col"><h3 class="location-title">自 Tijuana (Merry Tech) 出發</h3></div></li>
+            <li class="timeline-item"><div class="time-col">07:30</div><div class="content-col"><h3 class="location-title">搭乘 Trolley 藍線</h3></div></li>
+            <li class="timeline-item"><div class="time-col">08:20</div><div class="content-col"><h3 class="location-title">轉乘接駁至 SAN 機場</h3></div></li>
+            <li class="timeline-item"><div class="time-col">08:45</div><div class="content-col"><h3 class="location-title">抵達 SAN 機場報到</h3></div></li>
+            <li class="timeline-item">
+                <div class="time-col">12:37</div>
+                <div class="content-col">
+                    <h3 class="location-title">抵達 SFO 機場，前往住宿點</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=SFO&destination=Chapter+San+Francisco&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 機場 ➔ Chapter SF (大眾運輸)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">14:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">抵達 Chapter SF 寄放行李</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Chapter+San+Francisco&destination=San+Francisco+City+Hall&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ 市政廳 (步行)</a>
+                    <div class="food-recommendation"><span class="food-title">☕ 下午茶</span>Philz Coffee (薄荷冰咖啡)</div>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">15:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">三藩市市政廳 (City Hall)</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=San+Francisco+City+Hall&destination=Cris+Consignment,+San+Francisco&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 市政廳 ➔ Cris 二手店 (步行)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">16:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">Polk St 商圈與二手店尋寶</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Cris+Consignment,+San+Francisco&destination=Brenda's+French+Soul+Food&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 二手店 ➔ 餐廳 (步行)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">18:00</div>
+                <div class="content-col">
+                    <h3 class="location-title">晚餐時間</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Brenda's+French+Soul+Food&destination=Chapter+San+Francisco&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 餐廳 ➔ 住宿 (步行)</a>
+                    <div class="food-recommendation"><span class="food-title">🍗 晚餐</span>Brenda's French Soul Food (炸牡蠣與 Beignet)</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Day 2 updated with Warming Hut -->
+    <div class="day-card">
+        <h2 class="day-header">
+            <span>Day 2 (11/13 週五)</span>
+            <span>金門大橋與海角堡</span>
+        </h2>
+        <ul class="timeline">
+            <li class="timeline-item">
+                <div class="time-col">09:00</div>
+                <div class="content-col">
+                    <h3 class="location-title">由 Chapter SF 出發</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Chapter+San+Francisco&destination=Golden+Gate+Bridge+Welcome+Center&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ 金門大橋 (大眾運輸)</a>
+                    <div class="food-recommendation"><span class="food-title">🥪 早餐</span>As Quoted (無麩質健康餐飲)</div>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">09:40</div>
+                <div class="content-col">
+                    <h3 class="location-title">金門大橋 (Golden Gate Bridge)</h3>
+                    <p class="description-text">先到遊客中心，然後前往 <strong>Warming Hut Park Store <span class="highlight-tag">明信片機位</span></strong>，從禮品店窗景開始狂拍！</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Golden+Gate+Bridge+Welcome+Center&destination=Warming+Hut+Park+Store&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 大橋 ➔ Warming Hut (步行)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">11:00</div>
+                <div class="content-col">
+                    <h3 class="location-title">海角堡 & Crissy Field</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Warming+Hut+Park+Store&destination=Fort+Point+National+Historic+Site&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> Warming Hut ➔ 海角堡 (步行)</a>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Fort+Point+National+Historic+Site&destination=Palace+of+Fine+Arts&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 海角堡 ➔ 藝術宮 (步行)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">12:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">藝術宮 (Palace of Fine Arts)</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Palace+of+Fine+Arts&destination=Super+Duper+Burgers+Chestnut+Street&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 藝術宮 ➔ 餐廳 (步行)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">13:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">Marina 區午餐</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Super+Duper+Burgers+Chestnut+Street&destination=Golden+Gate+Park&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 午餐 ➔ 金門公園 (大眾運輸)</a>
+                    <div class="food-recommendation"><span class="food-title">🍟 午餐</span>Super Duper Burgers (大蒜薯條與漢堡)</div>
+                </div>
+            </li>
+             <li class="timeline-item">
+                <div class="time-col">15:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">金門公園 (Golden Gate Park)</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Golden+Gate+Park&destination=Kitchen+Aloha,+San+Francisco&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 公園 ➔ 餐廳 (大眾運輸)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">18:00</div>
+                <div class="content-col">
+                    <h3 class="location-title">晚餐時間</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Kitchen+Aloha,+San+Francisco&destination=Chapter+San+Francisco&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 餐廳 ➔ 住宿 (步行)</a>
+                    <div class="food-recommendation"><span class="food-title">🍱 晚餐</span>Kitchen Aloha (日式/夏威夷料理)</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Day 3 updated with Farmers Market Route, Sea Lions, and Cable Car -->
+    <div class="day-card">
+        <h2 class="day-header">
+            <span>Day 3 (11/14 週六)</span>
+            <span>農夫市集、海邊散步與叮叮車體驗</span>
+        </h2>
+        <ul class="timeline">
+            <li class="timeline-item">
+                <div class="time-col">08:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">由 Chapter SF 出發</h3>
+                     <a href="https://www.google.com/maps/dir/?api=1&origin=Chapter+San+Francisco&destination=Ferry+Building,+San+Francisco&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ 農夫市集 (大眾運輸)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">09:00</div>
+                <div class="content-col">
+                    <h3 class="location-title">Ferry Plaza 農夫市集 <span class="highlight-tag">週六限定</span></h3>
+                    <p class="description-text">舊金山最大最經典！逛完市集後，沿著安靜的海邊散步：<strong>Ferry Building ➔ Pier 7 ➔ Napier Lane (登高階梯)</strong>。</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Ferry+Building,+San+Francisco&destination=Pier+7,+San+Francisco&destination=Napier+Lane,+San+Francisco&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 經典海邊散步路線 (步行)</a>
+                    <div class="food-recommendation"><span class="food-title">🍳 早午餐</span>市集內享用熟食與咖啡</div>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">11:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">Salesforce Park 空中花園</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Napier+Lane,+San+Francisco&destination=Salesforce+Park&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> Napier Lane ➔ 空中花園 (步行/公車)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">13:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">Pier 39 看海獅曬太陽</h3>
+                    <p class="description-text">著名的 K 碼頭 (K-Dock) 尋找慵懶的海獅群。</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Salesforce+Park&destination=Pier+39&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 空中花園 ➔ 39號碼頭 (大眾運輸)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">15:00</div>
+                <div class="content-col">
+                    <h3 class="location-title">吉拉德里廣場 & Hyde 街碼頭</h3>
+                    <p class="description-text">買片巧克力，準備前往旁邊的叮叮車總站。</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Pier+39&destination=Hyde+and+Beach+Cable+Car+Turnaround&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 碼頭 ➔ 叮叮車總站 (步行)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">15:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">叮叮車體驗 (Cable Car) <span class="highlight-tag">必體驗</span></h3>
+                    <p class="description-text">在 <strong>Hyde & Beach Cable Car Turnaround</strong> 購買 $15 一日票，從終點站開始坐，一次看滿舊金山經典機位。可搭至 Lombard St 附近下車。</p>
+                    <div class="food-recommendation"><span class="food-title">💰 票價</span>Cable Car 一日票 $15</div>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">16:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">九曲花街 (Lombard St)</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Lombard+Street,+San+Francisco&destination=Golden+Boy+Pizza&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 九曲花街 ➔ 晚餐 (步行)</a>
+                </div>
+            </li>
+             <li class="timeline-item">
+                <div class="time-col">18:00</div>
+                <div class="content-col">
+                    <h3 class="location-title">北灘 (North Beach) 晚餐</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Golden+Boy+Pizza&destination=Top+of+the+Mark&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 晚餐 ➔ 酒吧 (步行)</a>
+                     <div class="food-recommendation"><span class="food-title">🍕 晚餐</span>Golden Boy Pizza (必點蛤蜊大蒜，脆厚餅底超香！)</div>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">20:00</div>
+                <div class="content-col">
+                    <h3 class="location-title">Top of the Mark 賞夜景</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Top+of+the+Mark&destination=Chapter+San+Francisco&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 酒吧 ➔ 住宿 (步行)</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Day 4 updated with TEMO's Cafe, Amoeba Music, and Twin Peaks/Bernal Heights -->
+    <div class="day-card">
+        <h2 class="day-header">
+            <span>Day 4 (11/15 週日)</span>
+            <span>嬉皮區、使命區壁畫與山丘夕陽</span>
+        </h2>
+        <ul class="timeline">
+            <li class="timeline-item">
+                <div class="time-col">09:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">由 Chapter SF 出發</h3>
+                     <a href="https://www.google.com/maps/dir/?api=1&origin=Chapter+San+Francisco&destination=Amoeba+Music+San+Francisco&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ Haight St (大眾運輸)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">10:00</div>
+                <div class="content-col">
+                    <h3 class="location-title">Haight Street 古著街 <span class="highlight-tag">嬉皮聖地</span></h3>
+                    <p class="description-text">60年代嬉皮士文化聖地。從 <strong>Amoeba Music</strong> (巨大獨立唱片店) 開始逛，門牌號逐漸變小一路逛下去。</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Amoeba+Music+San+Francisco&destination=Clarion+Alley&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 嬉皮區 ➔ 使命區壁畫 (大眾運輸)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">12:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">使命區 (Mission District) 壁畫</h3>
+                    <p class="description-text">舊金山拉丁文化最濃的街區，欣賞 Clarion Alley 或 Balmy Alley 壁畫。</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Clarion+Alley&destination=Temo's+Cafe,+San+Francisco&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 壁畫 ➔ 咖啡廳 (步行)</a>
+                    <div class="food-recommendation"><span class="food-title">☕ 咖啡推薦</span>TEMO's Cafe (喝一杯再開始逛！) 或 Sightglass</div>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">14:00</div>
+                <div class="content-col">
+                    <h3 class="location-title">使命區午餐 & 閒逛</h3>
+                     <a href="https://www.google.com/maps/dir/?api=1&origin=Mission+District,+San+Francisco&destination=Sui+Generis+Designer+Consignment&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 午餐 ➔ 二手店 (大眾運輸)</a>
+                     <div class="food-recommendation"><span class="food-title">🌮 午餐</span>隨選在地 Taqueria (墨西哥捲餅)</div>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">15:00</div>
+                <div class="content-col">
+                    <h3 class="location-title">精品託售中心尋寶</h3>
+                    <a href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=Twin%20Peaks" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 二手店 ➔ 雙峰 (開啟 Uber)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">16:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">雙峰 (Twin Peaks) 賞夕陽</h3>
+                    <p class="description-text">360度俯瞰舊金山全景的最佳地點。<br><small>*備案：若不想上雙峰，也可選擇附近的 <strong>Bernal Heights Park</strong> 看日落與城區風景。</small></p>
+                    <a href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=Castro%20District" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 賞景點 ➔ 卡斯楚區 (開啟 Uber)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">18:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">市區晚餐</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Castro+District,+San+Francisco&destination=Chapter+San+Francisco&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 晚餐區 ➔ 住宿 (大眾運輸)</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Day 5 remains unchanged -->
+    <div class="day-card">
+        <h2 class="day-header">
+            <span>Day 5 (11/16 週一)</span>
+            <span>市區精華與機場歸途</span>
+        </h2>
+        <div style="padding: 12px 15px; background: #fff0f0; border-bottom: 1px solid var(--border-color);">
+            <div class="warning-text">⚠️ 航班 14:44 起飛。務必於 11:30 前離開住宿點。</div>
+        </div>
+        <ul class="timeline">
+            <li class="timeline-item">
+                <div class="time-col">08:15</div>
+                <div class="content-col">
+                    <h3 class="location-title">由 Chapter SF 出發</h3>
+                     <a href="https://www.google.com/maps/dir/?api=1&origin=Chapter+San+Francisco&destination=Union+Square,+San+Francisco&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ 聯合廣場 (大眾運輸)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">08:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">聯合廣場 & Powell St</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Union+Square,+San+Francisco&destination=Chinatown+Dragon+Gate,+San+Francisco&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 聯合廣場 ➔ 唐人街 (步行)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">09:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">舊金山唐人街</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Chinatown+Dragon+Gate,+San+Francisco&destination=Chapter+San+Francisco&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 唐人街 ➔ 住宿 (大眾運輸)</a>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">10:30</div>
+                <div class="content-col">
+                    <h3 class="location-title">返回 Chapter SF 取行李</h3>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Chapter+San+Francisco&destination=SFO&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ SFO 機場 (BART)</a>
+                </div>
+            </li>
+            <li class="timeline-item"><div class="time-col">11:30</div><div class="content-col"><h3 class="location-title">出發前往 SFO 機場</h3></div></li>
+            <li class="timeline-item"><div class="time-col">14:44</div><div class="content-col"><h3 class="location-title">搭機起飛</h3></div></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    const INITIAL_BUDGET = 528;
+    let expenses = JSON.parse(localStorage.getItem('sf_expenses')) || [];
+
+    function updateBudgetUI() {
+        const spent = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+        const remaining = INITIAL_BUDGET - spent;
+
+        document.getElementById('total-spent').innerText = spent.toFixed(2);
+        document.getElementById('remaining-budget').innerText = remaining.toFixed(2);
+
+        const remainingEl = document.querySelector('.budget-stats .remaining');
+        remainingEl.style.color = remaining < 0 ? '#e74c3c' : '#27ae60';
+
+        const list = document.getElementById('expense-list');
+        list.innerHTML = '';
+        expenses.forEach((exp, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span>${exp.name}</span><span>$${exp.amount.toFixed(2)} <button class="delete-btn" onclick="deleteExpense(${index})">×</button></span>`;
+            list.appendChild(li);
+        });
+    }
+
+    function addExpense() {
+        const nameInput = document.getElementById('expense-name');
+        const amountInput = document.getElementById('expense-amount');
+        const amount = parseFloat(amountInput.value);
+
+        if (isNaN(amount) || amount <= 0) {
+            amountInput.style.borderColor = '#e74c3c';
+            setTimeout(() => amountInput.style.borderColor = 'var(--border-color)', 1500);
+            return;
+        }
+
+        expenses.push({ name: nameInput.value || '未命名', amount: amount });
+        localStorage.setItem('sf_expenses', JSON.stringify(expenses));
+        nameInput.value = ''; amountInput.value = '';
+        updateBudgetUI();
+    }
+
+    function deleteExpense(index) {
+        expenses.splice(index, 1);
+        localStorage.setItem('sf_expenses', JSON.stringify(expenses));
+        updateBudgetUI();
+    }
+
+    function injectInlineExpenses() {
+        document.querySelectorAll('.timeline-item .content-col').forEach(col => {
+            if(col.querySelector('.inline-expense-container')) return;
+            const title = col.querySelector('.location-title').innerText;
+            const expenseDiv = document.createElement('div');
+            expenseDiv.className = 'inline-expense-container';
+            expenseDiv.innerHTML = `
+                <input type="text" class="inline-name" value="${title} ">
+                <div class="inline-action-row">
+                    <input type="number" class="inline-amount" placeholder="金額 ($)" step="0.01">
+                    <button onclick="addInlineExpense(this)">記一筆</button>
+                </div>
+            `;
+            col.appendChild(expenseDiv);
+        });
+    }
+
+    function addInlineExpense(btn) {
+        const container = btn.closest('.inline-expense-container');
+        const amountInput = container.querySelector('.inline-amount');
+        const amount = parseFloat(amountInput.value);
+
+        if (isNaN(amount) || amount <= 0) {
+            amountInput.style.borderColor = '#e74c3c';
+            setTimeout(() => amountInput.style.borderColor = 'var(--border-color)', 1500);
+            return;
+        }
+
+        expenses.push({ name: container.querySelector('.inline-name').value.trim() || '未命名', amount: amount });
+        localStorage.setItem('sf_expenses', JSON.stringify(expenses));
+        amountInput.value = '';
+        updateBudgetUI();
+        
+        const origText = btn.innerText;
+        btn.innerText = '已記帳 ✓'; btn.style.backgroundColor = '#27ae60';
+        setTimeout(() => { btn.innerText = origText; btn.style.backgroundColor = 'var(--secondary-color)'; }, 1500);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateBudgetUI();
+        injectInlineExpenses();
+    });
+</script>
+</body>
+</html>
