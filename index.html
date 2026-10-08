@@ -56,9 +56,12 @@
 
         .budget-tracker { border-left-color: var(--primary-color); background-color: #f0f4f8; }
         .budget-stats {
-            display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px; font-size: 1rem;
+            display: flex; flex-direction: column; gap: 8px; font-weight: bold; margin-bottom: 15px; font-size: 1rem;
         }
+        .budget-stats > div { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #d1d5db; padding-bottom: 8px; }
+        .budget-stats > div:last-child { border-bottom: none; padding-bottom: 0; }
         .budget-stats .remaining { color: #27ae60; }
+        .twd-text { font-size: 0.85rem; color: #7f8c8d; font-weight: normal; margin-left: 5px; }
 
         /* 重置 iOS 預設按鈕與輸入框樣式，強制高度與字體大小防縮放 */
         input[type="text"], input[type="number"], button {
@@ -108,13 +111,15 @@
         .inline-action-row input { flex: 1.5; }
         .inline-action-row button { flex: 1; }
 
-        .expense-list { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
-        .expense-list li {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 0; border-bottom: 1px solid #e0e0e0; font-size: 0.9rem;
-        }
-        .expense-list li:last-child { border-bottom: none; }
-        .delete-btn { color: #e74c3c; background: none; border: none; font-size: 1.2rem; height: auto; padding: 0 10px; width: auto; }
+        /* 新增花費明細總表樣式 */
+        .summary-table-container { overflow-x: auto; margin-top: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .summary-table { width: 100%; border-collapse: collapse; background: #fff; font-size: 0.9rem; min-width: 300px; }
+        .summary-table th, .summary-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #f0f0f0; }
+        .summary-table th { background-color: var(--primary-color); color: white; font-weight: 500; font-size: 0.85rem;}
+        .summary-table td { color: var(--text-color); }
+        .summary-table tfoot th { background-color: #e2e8f0; color: #333; font-weight: bold; border-top: 2px solid #ccc; }
+        .summary-table tr:last-child td { border-bottom: none; }
+        .delete-btn-table { color: #e74c3c; background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 0 5px; height: auto; width: auto; }
 
         .day-card { background: var(--card-bg); border-radius: 8px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
         .day-header {
@@ -156,18 +161,41 @@
     <div class="info-box budget-tracker">
         <h3 style="margin-top: 0; margin-bottom: 15px; color: var(--primary-color);">💰 預算控管</h3>
         <div class="budget-stats">
-            <div>總預算: $<span id="total-budget">528</span></div>
-            <div>已花: $<span id="total-spent">0</span></div>
-            <div class="remaining">剩餘: $<span id="remaining-budget">528</span></div>
+            <div><span>總預算</span> <span>$<span id="total-budget">530</span> <span class="twd-text">(約 NT$<span id="total-budget-twd"></span>)</span></span></div>
+            <div><span>已花費</span> <span>$<span id="total-spent">0</span> <span class="twd-text">(約 NT$<span id="total-spent-twd">0</span>)</span></span></div>
+            <div class="remaining"><span>剩餘預算</span> <span>$<span id="remaining-budget">530</span> <span class="twd-text">(約 NT$<span id="remaining-budget-twd"></span>)</span></span></div>
         </div>
         <div class="expense-input">
             <input type="text" id="expense-name" placeholder="項目 (例: 晚餐)">
             <div class="expense-amount-row">
-                <input type="number" id="expense-amount" placeholder="金額 ($)" step="0.01">
+                <input type="number" id="expense-amount" placeholder="金額 (USD)" step="0.01">
                 <button onclick="addExpense()">記一筆</button>
             </div>
         </div>
-        <ul id="expense-list" class="expense-list"></ul>
+        
+        <div class="summary-table-container">
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>USD</th>
+                        <th>TWD</th>
+                        <th style="text-align: center;">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="expense-tbody">
+                    <!-- 動態生成 -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>總計</th>
+                        <th id="table-total-usd">$0.00</th>
+                        <th id="table-total-twd">NT$0</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 
     <div class="day-card">
@@ -286,7 +314,7 @@
     <div class="day-card">
         <h2 class="day-header">
             <span>Day 3 (11/14 週六)</span>
-            <span>農夫市集、海邊散步與叮叮車體驗</span>
+            <span>農夫市集、白天叮叮車與海灣郵輪</span>
         </h2>
         <ul class="timeline">
             <li class="timeline-item">
@@ -306,53 +334,57 @@
                 </div>
             </li>
             <li class="timeline-item">
-                <div class="time-col">11:30</div>
+                <div class="time-col">11:00</div>
                 <div class="content-col">
                     <h3 class="location-title">Salesforce Park 空中花園</h3>
                     <a href="https://www.google.com/maps/dir/?api=1&origin=Napier+Lane,+San+Francisco&destination=Salesforce+Park&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> Napier Lane ➔ 空中花園 (步行/公車)</a>
                 </div>
             </li>
             <li class="timeline-item">
-                <div class="time-col">13:30</div>
+                <div class="time-col">12:30</div>
                 <div class="content-col">
-                    <h3 class="location-title">Pier 39 看海獅曬太陽</h3>
-                    <p class="description-text">著名的 K 碼頭 (K-Dock) 尋找慵懶的海獅群。</p>
-                    <a href="https://www.google.com/maps/dir/?api=1&origin=Salesforce+Park&destination=Pier+39&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 空中花園 ➔ 39號碼頭 (大眾運輸)</a>
+                    <h3 class="location-title">白天叮叮車體驗 (Cable Car) <span class="highlight-tag">經典Powell-Hyde線</span></h3>
+                    <p class="description-text">從市區的 <strong>Powell St 總站</strong> 上車，白天能清楚欣賞舊金山的起伏山丘與街景！沿途會經過聯合廣場、中國城，並從高處俯瞰海灣，最後在 Hyde & Beach 終點站下車。<br><small>*週末排隊人潮較多，建議抓充裕時間排隊，搭車前可先在總站附近吃午餐。</small></p>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Salesforce+Park&destination=Powell+and+Market+Cable+Car+Turnaround&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 空中花園 ➔ 叮叮車總站 (步行/大眾運輸)</a>
+                    <div class="food-recommendation"><span class="food-title">💰 票價</span>單程票 $8，可下載 MuniMobile App 購買。</div>
+                </div>
+            </li>
+            <li class="timeline-item">
+                <div class="time-col">14:00</div>
+                <div class="content-col">
+                    <h3 class="location-title">吉拉德里廣場 (Ghirardelli Square)</h3>
+                    <p class="description-text">叮叮車下車點旁邊就是著名的巧克力廣場！買片巧克力或喝杯熱飲，稍作休息。</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Hyde+and+Beach+Cable+Car+Turnaround&destination=Ghirardelli+Square&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 下車站 ➔ 吉拉德里廣場 (步行)</a>
                 </div>
             </li>
             <li class="timeline-item">
                 <div class="time-col">15:00</div>
                 <div class="content-col">
-                    <h3 class="location-title">吉拉德里廣場 & Hyde 街碼頭</h3>
-                    <p class="description-text">買片巧克力，準備前往旁邊的叮叮車總站。</p>
-                    <a href="https://www.google.com/maps/dir/?api=1&origin=Pier+39&destination=Hyde+and+Beach+Cable+Car+Turnaround&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 碼頭 ➔ 叮叮車總站 (步行)</a>
-                </div>
-            </li>
-            <li class="timeline-item">
-                <div class="time-col">15:30</div>
-                <div class="content-col">
-                    <h3 class="location-title">叮叮車體驗 (Cable Car) <span class="highlight-tag">必體驗</span></h3>
-                    <p class="description-text">在 <strong>Hyde & Beach Cable Car Turnaround</strong> 購買 $15 一日票，從終點站開始坐，一次看滿舊金山經典機位。可搭至 Lombard St 附近下車。</p>
-                    <div class="food-recommendation"><span class="food-title">💰 票價</span>Cable Car 一日票 $15</div>
+                    <h3 class="location-title">Pier 39 看海獅曬太陽</h3>
+                    <p class="description-text">沿著海岸線散步至著名的 K 碼頭 (K-Dock) 尋找慵懶的海獅群。</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Ghirardelli+Square&destination=Pier+39&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 廣場 ➔ 39號碼頭 (海濱步行)</a>
                 </div>
             </li>
             <li class="timeline-item">
                 <div class="time-col">16:30</div>
                 <div class="content-col">
-                    <h3 class="location-title">九曲花街 (Lombard St)</h3>
-                    <a href="https://www.google.com/maps/dir/?api=1&origin=Lombard+Street,+San+Francisco&destination=Yoki+Sushi,+San+Francisco&travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 九曲花街 ➔ Yoki Sushi 晚餐 (大眾運輸)</a>
+                    <h3 class="location-title">🚢 海灣夕陽/夜間郵輪 <span class="highlight-tag">強烈推薦</span></h3>
+                    <p class="description-text">搭乘 Red & White 或 Blue & Gold Fleet 郵輪 (建議提前網上購票)，從海灣欣賞落日餘暉，並<strong>從下方穿越點燈的金門大橋</strong>，超級浪漫！(航程約 1.5~2 小時)</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=Pier+39&destination=Pier+43+1/2,+San+Francisco&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 39號碼頭 ➔ 郵輪碼頭 (步行)</a>
+                    <div class="food-recommendation"><span class="food-title">💡 提醒</span>海風極強，務必穿戴防風保暖衣物與毛帽！</div>
                 </div>
             </li>
              <li class="timeline-item">
-                <div class="time-col">18:00</div>
+                <div class="time-col">18:45</div>
                 <div class="content-col">
                     <h3 class="location-title">Nob Hill 區晚餐 <span class="highlight-tag">預定餐廳</span></h3>
-                    <a href="https://www.google.com/maps/dir/?api=1&origin=Yoki+Sushi,+San+Francisco&destination=Top+of+the+Mark&travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 晚餐 ➔ 酒吧 (步行)</a>
+                    <p class="description-text">郵輪結束後，建議直接從碼頭區叫 Uber/Lyft 前往 Nob Hill 享用晚餐，節省體力。</p>
+                    <a href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=Yoki%20Sushi%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 碼頭 ➔ 晚餐 (開啟 Uber)</a>
                      <div class="food-recommendation"><span class="food-title">🍣 晚餐</span>Yoki Sushi (900 Bush St, 主打精緻日韓料理)</div>
                 </div>
             </li>
             <li class="timeline-item">
-                <div class="time-col">20:00</div>
+                <div class="time-col">20:30</div>
                 <div class="content-col">
                     <h3 class="location-title">Top of the Mark 賞夜景</h3>
                     <p class="description-text">距離 Yoki Sushi 僅幾步之遙，餐後散步過去喝杯調酒看夜景。</p>
@@ -477,7 +509,8 @@
 </div>
 
 <script>
-    const INITIAL_BUDGET = 528;
+    const INITIAL_BUDGET = 530;
+    const EXCHANGE_RATE = 31.5; // 設定美金對台幣匯率
     let expenses = JSON.parse(localStorage.getItem('sf_expenses')) || [];
 
     function updateBudgetUI() {
@@ -486,17 +519,33 @@
 
         document.getElementById('total-spent').innerText = spent.toFixed(2);
         document.getElementById('remaining-budget').innerText = remaining.toFixed(2);
+        
+        // 更新 TWD 顯示 (toLocaleString 可加入千分位逗號，例如 17,225)
+        document.getElementById('total-budget-twd').innerText = Math.round(INITIAL_BUDGET * EXCHANGE_RATE).toLocaleString();
+        document.getElementById('total-spent-twd').innerText = Math.round(spent * EXCHANGE_RATE).toLocaleString();
+        document.getElementById('remaining-budget-twd').innerText = Math.round(remaining * EXCHANGE_RATE).toLocaleString();
 
         const remainingEl = document.querySelector('.budget-stats .remaining');
         remainingEl.style.color = remaining < 0 ? '#e74c3c' : '#27ae60';
 
-        const list = document.getElementById('expense-list');
-        list.innerHTML = '';
+        // 更新花費明細總表
+        const tbody = document.getElementById('expense-tbody');
+        tbody.innerHTML = '';
         expenses.forEach((exp, index) => {
-            const li = document.createElement('li');
-            li.innerHTML = `<span>${exp.name}</span><span>$${exp.amount.toFixed(2)} <button class="delete-btn" onclick="deleteExpense(${index})">×</button></span>`;
-            list.appendChild(li);
+            const tr = document.createElement('tr');
+            const twdAmount = Math.round(exp.amount * EXCHANGE_RATE).toLocaleString();
+            tr.innerHTML = `
+                <td>${exp.name}</td>
+                <td>$${exp.amount.toFixed(2)}</td>
+                <td style="color: #666;">NT$${twdAmount}</td>
+                <td style="text-align: center;"><button class="delete-btn-table" title="刪除" onclick="deleteExpense(${index})">×</button></td>
+            `;
+            tbody.appendChild(tr);
         });
+        
+        // 更新表格底部的總計
+        document.getElementById('table-total-usd').innerText = '$' + spent.toFixed(2);
+        document.getElementById('table-total-twd').innerText = 'NT$' + Math.round(spent * EXCHANGE_RATE).toLocaleString();
     }
 
     function addExpense() {
