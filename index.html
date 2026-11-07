@@ -154,6 +154,7 @@
         .warning-text { color: #d32f2f; font-weight: bold; font-size: 0.9rem; }
         .safety-alert { background: #fdecea; border-left: 4px solid #d32f2f; color: #b71c1c; padding: 10px 12px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; line-height: 1.5; margin: 8px 0 10px 0; }
         .safety-alert small { font-weight: normal; color: #b71c1c; }
+        .tl-tag { display: inline-block; background: #fdecea; color: #d32f2f; border: 1px solid #f5c6c6; font-size: 0.72rem; font-weight: bold; line-height: 1.4; padding: 1px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
     </style>
 </head>
 <body>
@@ -234,14 +235,14 @@
 <li class="timeline-item">
 <div class="time-col">約 13:30</div>
 <div class="content-col">
-<h3 class="location-title">Powell St 站，前往住宿點</h3>
+<h3 class="location-title">Powell St 站，前往住宿點 <span class="tl-tag">Tenderloin 邊緣</span></h3>
 <a href="https://www.google.com/maps/dir/?api=1&amp;origin=Powell+St+BART+Station,+San+Francisco&amp;destination=Chapter+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> Powell St 站 ➔ Chapter SF (大眾運輸)</a>
 </div>
 </li>
 <li class="timeline-item">
 <div class="time-col">約 14:00</div>
 <div class="content-col">
-<h3 class="location-title">抵達 Chapter SF 寄放行李</h3>
+<h3 class="location-title">抵達 Chapter SF 寄放行李 <span class="tl-tag">鄰近 Tenderloin 西側</span></h3>
 <a href="https://www.google.com/maps/dir/?api=1&amp;origin=Chapter+San+Francisco&amp;destination=Cris+Consignment,+San+Francisco&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ Cris 二手店 (步行)</a>
 </div>
 </li>
@@ -264,19 +265,19 @@
 <li class="timeline-item">
 <div class="time-col">約 17:00</div>
 <div class="content-col">
-<h3 class="location-title">三藩市市政廳 (City Hall)</h3>
+<h3 class="location-title">三藩市市政廳 (City Hall) <span class="tl-tag">Tenderloin 邊緣</span></h3>
 <p class="description-text">從 Alamo Square 往東步行過來，欣賞外觀並拍照。</p>
 <div class="safety-alert">🚨 傍晚的 Civic Center 請小心：在 Polk St 側的正面拍照約 10 分鐘就離開，不要往 Market St / UN Plaza 方向走。</div>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Brenda%27s%20French%20Soul%20Food%2C%20652%20Polk%20St%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 市政廳 ➔ 晚餐 (開啟 Uber)</a>
+<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Izakaya%20Yoki%2C%20900%20Bush%20St%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 市政廳 ➔ 晚餐 (開啟 Uber)</a>
 </div>
 </li>
 <li class="timeline-item">
 <div class="time-col">18:00</div>
 <div class="content-col">
-<h3 class="location-title">晚餐時間</h3>
-<div class="safety-alert">🚨 Brenda's 位於 Tenderloin（Polk St，Eddy 與 Turk 之間），天黑後不要步行回旅館。排隊時手機收好、不要站在路邊滑。<br><small>*若想避開這一區，可改到 Hayes Valley 的餐廳（市政廳往西過 Gough St 即是）。</small></div>
+<h3 class="location-title">晚餐時間 <span class="tl-tag">Tenderloin 邊緣</span></h3>
+<div class="safety-alert">🚨 Izakaya Yoki（900 Bush St）在 Lower Nob Hill，緊鄰 Tenderloin 北緣。請在店門口上下車，天黑後不要步行，一律叫 Uber 回旅館。</div>
 <a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 晚餐 ➔ 住宿 (開啟 Uber)</a>
-<div class="food-recommendation"><span class="food-title">🍗 晚餐</span>Brenda's French Soul Food (炸牡蠣與 Beignet)</div>
+<div class="food-recommendation"><span class="food-title">🍣 晚餐</span>Izakaya Yoki (900 Bush St，日韓料理)<br><small>*評論提到可能是限時吃到飽，訂位時問清楚；週四營業時間請先確認，建議先訂位。</small></div>
 </div>
 </li>
 </ul>
@@ -292,23 +293,24 @@
 <div class="time-col">07:45</div>
 <div class="content-col">
 <h3 class="location-title">由 Chapter SF 出發</h3>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Chapter+San+Francisco&amp;destination=As+Quoted,+3613+Sacramento+St,+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ As Quoted (大眾運輸)</a>
+<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Brenda%27s%20French%20Soul%20Food%2C%20652%20Polk%20St%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 住宿 ➔ Brenda's (開啟 Uber，約 5 分鐘)</a>
 </div>
 </li>
 <li class="timeline-item">
-<div class="time-col">約 08:15</div>
+<div class="time-col">約 08:00</div>
 <div class="content-col">
-<h3 class="location-title">As Quoted 早餐</h3>
-<p class="description-text">週一至週六 08:00–15:00 營業，週日公休。<br><small>*餐廳在往金門大橋的路上，順路不繞路。約 09:00 吃完出發，搭 Muni 28 到 Golden Gate Bridge 停車場站。</small></p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=As+Quoted,+3613+Sacramento+St,+San+Francisco&amp;destination=Warming+Hut+Park+Store,+983+Marine+Dr,+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> As Quoted ➔ Warming Hut (大眾運輸)</a>
-<div class="food-recommendation"><span class="food-title">🥪 早餐</span>As Quoted (無麩質健康餐飲)</div>
+<h3 class="location-title">Brenda's French Soul Food 早餐 <span class="tl-tag">Tenderloin</span></h3>
+<p class="description-text">652 Polk St（Eddy 與 Turk 之間）。招牌是 Beignet 與炸鯰魚蛋 Benedict，平日早上排隊比週末短。約 09:15 吃完，叫 Uber 去 Fort Point（約 20–25 分鐘）。<br><small>*各網站營業時間不一致，多數寫 08:00 開門，出發前請查 Google Maps 或打 415-345-8100。</small></p>
+<div class="safety-alert">🚨 Brenda's 位於 Tenderloin。只在白天前往，在店門口上下車，用 Uber 往返，不要步行穿過周邊街區。</div>
+<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Fort%20Point%20National%20Historic%20Site%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> Brenda's ➔ Fort Point (開啟 Uber)</a>
+<div class="food-recommendation"><span class="food-title">🥞 早餐</span>Brenda's French Soul Food</div>
 </div>
 </li>
 <li class="timeline-item">
 <div class="time-col">約 10:00</div>
 <div class="content-col">
 <h3 class="location-title">Fort Point 海角堡</h3>
-<p class="description-text">約 09:45 下 Muni 28（Golden Gate Bridge 停車場站），走木階梯往海邊，約 10:00 抵達 Fort Point（免費，11 月通常週五至週日 10:00–17:00 開放，出發前請上 NPS 官網確認）。停留約 40 分鐘：橋底鋼構與拱形很適合拍娃娃，欄杆和鋼構可以當座位。約 10:40 沿海邊步道走去 Warming Hut（約 15 分鐘）。</p>
+<p class="description-text">約 09:45 搭 Uber 抵達 Fort Point 附近，約 10:00 入場 Fort Point（免費，11 月通常週五至週日 10:00–17:00 開放，出發前請上 NPS 官網確認）。停留約 40 分鐘：橋底鋼構與拱形很適合拍娃娃，欄杆和鋼構可以當座位。約 10:40 沿海邊步道走去 Warming Hut（約 15 分鐘）。</p>
 <a href="https://www.google.com/maps/dir/?api=1&amp;origin=Fort+Point+National+Historic+Site&amp;destination=Warming+Hut+Park+Store,+983+Marine+Dr,+San+Francisco&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> Fort Point ➔ Warming Hut (步行)</a>
 </div>
 </li>
@@ -324,16 +326,16 @@
 <div class="time-col">約 12:45</div>
 <div class="content-col">
 <h3 class="location-title">藝術宮 (Palace of Fine Arts)</h3>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Palace+of+Fine+Arts&amp;destination=Chestnut+Street,+Marina+District,+San+Francisco&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 藝術宮 ➔ Chestnut St (步行)</a>
+<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=As%20Quoted%2C%203613%20Sacramento%20St%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 藝術宮 ➔ As Quoted (開啟 Uber，約 10 分鐘)</a>
 </div>
 </li>
 <li class="timeline-item">
-<div class="time-col">13:30</div>
+<div class="time-col">約 13:15</div>
 <div class="content-col">
-<h3 class="location-title">Marina Chestnut St 午餐</h3>
-<p class="description-text">請在 <strong>14:15 前</strong>結束午餐出發。前往 Lands End 單程約 50–60 分鐘，可用 Google Maps 查 Muni（例如 38 Geary 到 Point Lobos &amp; 48th Ave 附近），趕時間可叫 Uber 單程。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Chestnut+Street,+Marina+District,+San+Francisco&amp;destination=Sutro+Baths,+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 午餐 ➔ Sutro Baths (大眾運輸)</a>
-<div class="food-recommendation"><span class="food-title">🍴 午餐</span>Chestnut St 上自選餐廳</div>
+<h3 class="location-title">As Quoted 午餐</h3>
+<p class="description-text">3613 Sacramento St（Presidio Heights），全無麩質咖啡廳，營業至 15:00，週日公休。請在 <strong>14:30 前</strong>結束午餐，叫 Uber 前往 Lands End（車程約 15–20 分鐘）。<br><small>*出發前請確認週五營業時間。</small></p>
+<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Sutro%20Baths%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> As Quoted ➔ Sutro Baths (開啟 Uber)</a>
+<div class="food-recommendation"><span class="food-title">🥪 午餐</span>As Quoted (無麩質健康餐飲)</div>
 </div>
 </li>
 <li class="timeline-item">
@@ -349,7 +351,7 @@
 <li class="timeline-item">
 <div class="time-col">約 18:00</div>
 <div class="content-col">
-<h3 class="location-title">晚餐時間</h3>
+<h3 class="location-title">晚餐時間 <span class="tl-tag">Tenderloin 邊緣</span></h3>
 <p class="description-text"><small>*Kitchen Aloha 地址：752 Van Ness Ave。17:15 離開 Lands End，Uber 約 30 分鐘，約 18:00 到；請確認營業時間，必要時先訂位。</small></p>
 <div class="safety-alert">🚨 Kitchen Aloha 在 Tenderloin 邊緣。步行回旅館約 13 分鐘：只走 Van Ness / Franklin 大馬路，不要抄 Larkin、Polk 或小巷捷徑，手機收好。若下雨、疲累或晚於 20:30 離開，改叫 Uber。</div>
 <a href="https://www.google.com/maps/dir/?api=1&amp;origin=752+Van+Ness+Ave,+San+Francisco&amp;destination=1533+Franklin+St,+San+Francisco&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 餐廳 ➔ 住宿 (步行約 13 分鐘)</a>
@@ -405,7 +407,7 @@
 <li class="timeline-item">
 <div class="time-col">約 12:45</div>
 <div class="content-col">
-<h3 class="location-title">Powell 叮叮車總站 <span class="highlight-tag">經典 Powell-Hyde 線</span></h3>
+<h3 class="location-title">Powell 叮叮車總站 <span class="highlight-tag">經典 Powell-Hyde 線</span> <span class="tl-tag">Tenderloin 邊緣</span></h3>
 <p class="description-text">從 <strong>Powell St 總站</strong> 上車，搭乘 Powell-Hyde 線，沿途經過聯合廣場、中國城，並從高處俯瞰海灣，在 <strong>Hyde &amp; Lombard</strong> 下車去九曲花街。<br><small>*週末排隊人潮較多，請抓充裕時間；若排太久，從 Pier 39 的自由時間扣。</small></p>
 <div class="food-recommendation"><span class="food-title">💰 票價</span>單程票 $9（不可轉乘其他線）。Powell 總站 08:00–17:00 需先買好票才能上車，可在售票亭或用 MuniMobile App 購買。</div>
 </div>
@@ -430,8 +432,9 @@
 <div class="time-col">約 15:15</div>
 <div class="content-col">
 <h3 class="location-title">Pier 39 看海獅</h3>
-<p class="description-text">先到 K 碼頭 (K-Dock) 看海獅曬太陽，並在漁人碼頭一帶自由逛逛。最晚 16:15 出發前往 Pier 43½（步行約 10–15 分鐘），16:45 前到碼頭，留一點緩衝。</p>
+<p class="description-text">先到 K 碼頭 (K-Dock) 看海獅曬太陽，約 15:45 在 Pier 39 或漁人碼頭一帶簡單吃晚餐（自選，吃快一點，船上風大別空腹）。最晚 16:30 出發前往 Pier 43½（步行約 10–15 分鐘），17:00 前到碼頭報到。</p>
 <a href="https://www.google.com/maps/dir/?api=1&amp;origin=Pier+39&amp;destination=Pier+43+1/2,+Fisherman's+Wharf,+San+Francisco,+CA&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 39號碼頭 ➔ Pier 43½ (步行)</a>
+<div class="food-recommendation"><span class="food-title">🍽️ 晚餐</span>Pier 39 / 漁人碼頭一帶自選（郵輪前先吃）</div>
 </div>
 </li>
 <li class="timeline-item">
@@ -446,20 +449,10 @@
 <li class="timeline-item">
 <div class="time-col">約 20:00</div>
 <div class="content-col">
-<h3 class="location-title">晚餐時間 <span class="highlight-tag">需預約</span></h3>
-<p class="description-text">郵輪結束後，從碼頭叫 Uber/Lyft 前往餐廳，節省體力。<strong>需預約</strong>，並請確認當晚營業時間。</p>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Yoki%20Sushi%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 碼頭 ➔ 晚餐 (開啟 Uber)</a>
-<div class="safety-alert">🚨 Yoki Sushi（900 Bush St）位於 Nob Hill 與 Tenderloin 交界一帶（依地址判斷）。請在店門口上下車，不要在附近街區閒晃。</div>
-<div class="food-recommendation"><span class="food-title">🍣 晚餐</span>Yoki Sushi (900 Bush St, 主打精緻日韓料理)<br><small>*據 Google 評論為限時 90 分鐘的吃到飽，約 $45/人，實際價格請以現場為準。</small></div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 21:45</div>
-<div class="content-col">
 <h3 class="location-title">Top of the Mark 夜景</h3>
-<p class="description-text">從 Yoki Sushi 過去雖然只有幾分鐘，但夜間要上坡，建議叫 Uber（約 $8–12）。週六營業到約 00:30，建議先訂位。</p>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Top%20of%20the%20Mark%2C%20999%20California%20St%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> Yoki Sushi ➔ Top of the Mark (開啟 Uber)</a>
-<div class="safety-alert">🚨 約 23:00 回旅館一定要叫 Uber，不要步行。請在酒吧大廳叫車，車到了再出門。</div>
+<p class="description-text">郵輪 19:30 靠岸後，從碼頭叫 Uber 過來（車程約 15–20 分鐘，約 $15–20）。週六營業到約 00:30，建議先訂位並確認當天營業時間。</p>
+<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Top%20of%20the%20Mark%2C%20999%20California%20St%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 碼頭 ➔ Top of the Mark (開啟 Uber)</a>
+<div class="safety-alert">🚨 約 22:30 回旅館一定要叫 Uber，不要步行。請在酒吧大廳叫車，車到了再出門。</div>
 <a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 酒吧 ➔ 住宿 (開啟 Uber)</a>
 </div>
 </li>
@@ -579,7 +572,7 @@
 <li class="timeline-item">
 <div class="time-col">約 09:45</div>
 <div class="content-col">
-<h3 class="location-title">聯合廣場 &amp; Powell St</h3>
+<h3 class="location-title">聯合廣場 &amp; Powell St <span class="tl-tag">Tenderloin 邊緣</span></h3>
 <a href="https://www.google.com/maps/dir/?api=1&amp;origin=Union+Square,+San+Francisco&amp;destination=Chapter+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 聯合廣場 ➔ 住宿 (大眾運輸)</a>
 </div>
 </li>
