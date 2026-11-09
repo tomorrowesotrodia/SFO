@@ -155,6 +155,13 @@
         .safety-alert { background: #fdecea; border-left: 4px solid #d32f2f; color: #b71c1c; padding: 10px 12px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; line-height: 1.5; margin: 8px 0 10px 0; }
         .safety-alert small { font-weight: normal; color: #b71c1c; }
         .tl-tag { display: inline-block; background: #fdecea; color: #d32f2f; border: 1px solid #f5c6c6; font-size: 0.72rem; font-weight: bold; line-height: 1.4; padding: 1px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
+
+        .mode-group { margin: 5px 0 10px 0; }
+        .mode-label { font-size: 0.9rem; font-weight: 600; color: var(--primary-color); margin-bottom: 6px; }
+        .mode-label small { font-weight: normal; color: #888; font-size: 0.75rem; }
+        .mode-row { display: flex; gap: 6px; }
+        .mode-btn { flex: 1; text-align: center; text-decoration: none; background: var(--accent-color); color: #fff; padding: 11px 4px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; white-space: nowrap; }
+        .mode-btn.mode-uber { background: #111; }
     </style>
 </head>
 <body>
@@ -268,7 +275,7 @@
 <h3 class="location-title">三藩市市政廳 (City Hall) <span class="tl-tag">Tenderloin 邊緣</span></h3>
 <p class="description-text">從 Alamo Square 往東步行過來，欣賞外觀並拍照。</p>
 <div class="safety-alert">🚨 傍晚的 Civic Center 請小心：在 Polk St 側的正面拍照約 10 分鐘就離開，不要往 Market St / UN Plaza 方向走。</div>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Izakaya%20Yoki%2C%20900%20Bush%20St%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 市政廳 ➔ 晚餐 (開啟 Uber)</a>
+<div class="mode-group"><div class="mode-label">📍 市政廳 ➔ 晚餐　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Izakaya%20Yoki%2C%20900%20Bush%20St%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Izakaya%20Yoki%2C%20900%20Bush%20St%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Izakaya%20Yoki%2C%20900%20Bush%20St%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 </div>
 </li>
 <li class="timeline-item">
@@ -276,7 +283,7 @@
 <div class="content-col">
 <h3 class="location-title">晚餐時間 <span class="tl-tag">Tenderloin 邊緣</span></h3>
 <div class="safety-alert">🚨 Izakaya Yoki（900 Bush St）在 Lower Nob Hill，緊鄰 Tenderloin 北緣。請在店門口上下車，天黑後不要步行，一律叫 Uber 回旅館。</div>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 晚餐 ➔ 住宿 (開啟 Uber)</a>
+<div class="mode-group"><div class="mode-label">📍 晚餐 ➔ 住宿　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 <div class="food-recommendation"><span class="food-title">🍣 晚餐</span>Izakaya Yoki (900 Bush St，日韓料理)<br><small>*評論提到可能是限時吃到飽，訂位時問清楚；週四營業時間請先確認，建議先訂位。</small></div>
 </div>
 </li>
@@ -293,7 +300,7 @@
 <div class="time-col">07:45</div>
 <div class="content-col">
 <h3 class="location-title">由 Chapter SF 出發</h3>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Brenda%27s%20French%20Soul%20Food%2C%20652%20Polk%20St%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 住宿 ➔ Brenda's (開啟 Uber，約 5 分鐘)</a>
+<div class="mode-group"><div class="mode-label">📍 住宿 ➔ Brenda's（約 5 分鐘）　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Brenda%27s%20French%20Soul%20Food%2C%20652%20Polk%20St%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Brenda%27s%20French%20Soul%20Food%2C%20652%20Polk%20St%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Brenda%27s%20French%20Soul%20Food%2C%20652%20Polk%20St%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 </div>
 </li>
 <li class="timeline-item">
@@ -302,7 +309,7 @@
 <h3 class="location-title">Brenda's French Soul Food 早餐 <span class="tl-tag">Tenderloin</span></h3>
 <p class="description-text">652 Polk St（Eddy 與 Turk 之間）。招牌是 Beignet 與炸鯰魚蛋 Benedict，平日早上排隊比週末短。約 09:15 吃完，叫 Uber 去 Fort Point（約 20–25 分鐘）。<br><small>*各網站營業時間不一致，多數寫 08:00 開門，出發前請查 Google Maps 或打 415-345-8100。</small></p>
 <div class="safety-alert">🚨 Brenda's 位於 Tenderloin。只在白天前往，在店門口上下車，用 Uber 往返，不要步行穿過周邊街區。</div>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Fort%20Point%20National%20Historic%20Site%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> Brenda's ➔ Fort Point (開啟 Uber)</a>
+<div class="mode-group"><div class="mode-label">📍 Brenda's ➔ Fort Point　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Fort%20Point%20National%20Historic%20Site%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Fort%20Point%20National%20Historic%20Site%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Fort%20Point%20National%20Historic%20Site%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 <div class="food-recommendation"><span class="food-title">🥞 早餐</span>Brenda's French Soul Food</div>
 </div>
 </li>
@@ -326,7 +333,7 @@
 <div class="time-col">約 12:45</div>
 <div class="content-col">
 <h3 class="location-title">藝術宮 (Palace of Fine Arts)</h3>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=As%20Quoted%2C%203613%20Sacramento%20St%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 藝術宮 ➔ As Quoted (開啟 Uber，約 10 分鐘)</a>
+<div class="mode-group"><div class="mode-label">📍 藝術宮 ➔ As Quoted（約 10 分鐘）　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=As%20Quoted%2C%203613%20Sacramento%20St%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=As%20Quoted%2C%203613%20Sacramento%20St%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=As%20Quoted%2C%203613%20Sacramento%20St%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 </div>
 </li>
 <li class="timeline-item">
@@ -334,7 +341,7 @@
 <div class="content-col">
 <h3 class="location-title">As Quoted 午餐</h3>
 <p class="description-text">3613 Sacramento St（Presidio Heights），全無麩質咖啡廳，營業至 15:00，週日公休。請在 <strong>14:30 前</strong>結束午餐，叫 Uber 前往 Lands End（車程約 15–20 分鐘）。<br><small>*出發前請確認週五營業時間。</small></p>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Sutro%20Baths%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> As Quoted ➔ Sutro Baths (開啟 Uber)</a>
+<div class="mode-group"><div class="mode-label">📍 As Quoted ➔ Sutro Baths　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Sutro%20Baths%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Sutro%20Baths%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Sutro%20Baths%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 <div class="food-recommendation"><span class="food-title">🥪 午餐</span>As Quoted (無麩質健康餐飲)</div>
 </div>
 </li>
@@ -344,7 +351,7 @@
 <h3 class="location-title">Lands End / Sutro Baths 日落 <span class="highlight-tag">明信片機位</span></h3>
 <p class="description-text">太平洋海岸懸崖步道與 Sutro Baths 廢墟，沿海邊慢慢走、拍照。<strong>日落約 16:55</strong>（估算，出發前請用天氣 App 再確認），在 Sutro Baths 一帶看日落，約 17:15 離開。<br><small>*海邊風大，務必帶防風外套；天黑後步道光線不足，日落後就收工。</small></p>
 <div class="safety-alert">🚨 日落後步道無照明且偏僻：16:50 開始邊走邊叫 Uber，在有路燈的 Point Lobos Ave 路邊上車，不要搭 Muni，也不要在天黑後留在步道。</div>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Kitchen%20Aloha%2C%20752%20Van%20Ness%20Ave%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> Lands End ➔ 晚餐 (開啟 Uber)</a>
+<div class="mode-group"><div class="mode-label">📍 Lands End ➔ 晚餐　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Kitchen%20Aloha%2C%20752%20Van%20Ness%20Ave%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Kitchen%20Aloha%2C%20752%20Van%20Ness%20Ave%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Kitchen%20Aloha%2C%20752%20Van%20Ness%20Ave%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 <div class="food-recommendation"><span class="food-title">☁️ 天氣備案</span>若當天大霧或下雨：改去金門公園，建議 15:00 前抵達，先逛日本茶園（11 月最後入場 16:30），再上 de Young 觀景塔（通常比博物館早 1 小時關，約 16:15，週五是否延長請查官網）。</div>
 </div>
 </li>
@@ -354,8 +361,7 @@
 <h3 class="location-title">晚餐時間 <span class="tl-tag">Tenderloin 邊緣</span></h3>
 <p class="description-text"><small>*Kitchen Aloha 地址：752 Van Ness Ave。17:15 離開 Lands End，Uber 約 30 分鐘，約 18:00 到；請確認營業時間，必要時先訂位。</small></p>
 <div class="safety-alert">🚨 Kitchen Aloha 在 Tenderloin 邊緣。步行回旅館約 13 分鐘：只走 Van Ness / Franklin 大馬路，不要抄 Larkin、Polk 或小巷捷徑，手機收好。若下雨、疲累或晚於 20:30 離開，改叫 Uber。</div>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=752+Van+Ness+Ave,+San+Francisco&amp;destination=1533+Franklin+St,+San+Francisco&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 餐廳 ➔ 住宿 (步行約 13 分鐘)</a>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 餐廳 ➔ 住宿 (備用：開啟 Uber)</a>
+<div class="mode-group"><div class="mode-label">📍 餐廳 ➔ 住宿　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 <div class="food-recommendation"><span class="food-title">🍱 晚餐</span>Kitchen Aloha (日式/夏威夷料理)</div>
 </div>
 </li>
@@ -451,9 +457,9 @@
 <div class="content-col">
 <h3 class="location-title">Top of the Mark 夜景</h3>
 <p class="description-text">郵輪 19:30 靠岸後，從碼頭叫 Uber 過來（車程約 15–20 分鐘，約 $15–20）。週六營業到約 00:30，建議先訂位並確認當天營業時間。</p>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Top%20of%20the%20Mark%2C%20999%20California%20St%2C%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 碼頭 ➔ Top of the Mark (開啟 Uber)</a>
+<div class="mode-group"><div class="mode-label">📍 碼頭 ➔ Top of the Mark　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Top%20of%20the%20Mark%2C%20999%20California%20St%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Top%20of%20the%20Mark%2C%20999%20California%20St%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Top%20of%20the%20Mark%2C%20999%20California%20St%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 <div class="safety-alert">🚨 約 22:30 回旅館一定要叫 Uber，不要步行。請在酒吧大廳叫車，車到了再出門。</div>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 酒吧 ➔ 住宿 (開啟 Uber)</a>
+<div class="mode-group"><div class="mode-label">📍 酒吧 ➔ 住宿　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 </div>
 </li>
 </ul>
@@ -511,7 +517,7 @@
 <div class="content-col">
 <h3 class="location-title">Amoeba Music <span class="highlight-tag">嬉皮聖地</span></h3>
 <p class="description-text">巨大的獨立唱片店，感受 60 年代嬉皮士文化。每天 11:00 開門。約 16:00 從這裡搭 Uber 前往雙峰（車程約 10–15 分鐘）。</p>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Twin%20Peaks" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> Amoeba ➔ 雙峰 (開啟 Uber)</a>
+<div class="mode-group"><div class="mode-label">📍 Amoeba ➔ 雙峰　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Twin%20Peaks" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Twin%20Peaks&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Twin%20Peaks&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 </div>
 </li>
 <li class="timeline-item">
@@ -520,7 +526,7 @@
 <h3 class="location-title">雙峰 (Twin Peaks) 夕陽</h3>
 <p class="description-text">360度俯瞰舊金山全景的最佳地點。<br><small>*備案：若不想上雙峰，也可選擇附近的 <strong>Bernal Heights Park</strong> 看日落與城區風景。</small></p>
 <div class="safety-alert">🚨 日落後觀景台又暗、人又少：看完日落（約 16:55）就離開，16:50 先叫好 Uber，不要等天全黑。</div>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Super%20Duper%20Burgers%20Castro%20San%20Francisco" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 雙峰 ➔ Castro 晚餐 (開啟 Uber)</a>
+<div class="mode-group"><div class="mode-label">📍 雙峰 ➔ Castro 晚餐　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Super%20Duper%20Burgers%20Castro%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Super%20Duper%20Burgers%20Castro%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Super%20Duper%20Burgers%20Castro%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 </div>
 </li>
 <li class="timeline-item">
@@ -529,7 +535,7 @@
 <h3 class="location-title">晚餐時間</h3>
 <p class="description-text">與 Sui Generis 同一條街 (Market St)。</p>
 <div class="safety-alert">🚨 晚上不搭 Muni：回程路線可能經過 Market St / Van Ness 一帶，改叫 Uber 直接送到旅館門口。</div>
-<a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="nav-btn"><span class="nav-icon">🚕</span> 晚餐 ➔ 住宿 (開啟 Uber)</a>
+<div class="mode-group"><div class="mode-label">📍 晚餐 ➔ 住宿　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
 <div class="food-recommendation"><span class="food-title">🍔 晚餐</span>Super Duper Burgers (Castro)</div>
 </div>
 </li>
