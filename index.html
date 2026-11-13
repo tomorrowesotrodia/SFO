@@ -1,730 +1,331 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>舊金山五天四夜高執行力旅遊手冊 (更新版)</title>
-    <style>
-        :root {
-            --primary-color: #1A2C42; /* 海軍藍 */
-            --secondary-color: #6A4A4D; /* 不飽和酒紅 */
-            --accent-color: #805A5D; /* 淺酒紅 */
-            --background-color: #f4f5f7;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-            --border-color: #d1d5db;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
-            margin: 0;
-            padding: 0;
-            -webkit-text-size-adjust: 100%;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 15px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 20px 15px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        h1 { margin: 0 0 5px 0; font-size: 1.5rem; }
-        .subtitle { font-size: 0.9rem; opacity: 0.9; margin: 0; }
-
-        .info-box {
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--accent-color);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            font-size: 0.95rem;
-        }
-
-        .budget-tracker { border-left-color: var(--primary-color); background-color: #f0f4f8; }
-        .budget-stats {
-            display: flex; flex-direction: column; gap: 8px; font-weight: bold; margin-bottom: 15px; font-size: 1rem;
-        }
-        .budget-stats > div { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #d1d5db; padding-bottom: 8px; }
-        .budget-stats > div:last-child { border-bottom: none; padding-bottom: 0; }
-        .budget-stats .remaining { color: #27ae60; }
-        .twd-text { font-size: 0.85rem; color: #7f8c8d; font-weight: normal; margin-left: 5px; }
-
-        /* 重置 iOS 預設按鈕與輸入框樣式，強制高度與字體大小防縮放 */
-        input[type="text"], input[type="number"], button {
-            -webkit-appearance: none;
-            appearance: none;
-            box-sizing: border-box;
-            height: 48px; 
-            font-size: 16px !important; 
-            border-radius: 8px;
-            margin: 0;
-            outline: none;
-        }
-
-        input[type="text"], input[type="number"] {
-            padding: 0 15px;
-            border: 1px solid var(--border-color);
-            background-color: #ffffff;
-            color: var(--text-color);
-            width: 100%;
-        }
-
-        button {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            font-weight: bold;
-            padding: 0 15px;
-            cursor: pointer;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap;
-        }
-        button:active { background-color: var(--accent-color); }
-
-        .expense-input { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        .expense-amount-row { display: flex; gap: 10px; width: 100%; }
-        .expense-amount-row input { flex: 1.5; }
-        .expense-amount-row button { flex: 1; }
-
-        .inline-expense-container {
-            display: flex; flex-direction: column; gap: 10px; margin-top: 15px; padding-top: 15px;
-            border-top: 1px dashed var(--border-color); width: 100%;
-        }
-        .inline-action-row { display: flex; gap: 10px; width: 100%; }
-        .inline-action-row input { flex: 1.5; }
-        .inline-action-row button { flex: 1; }
-
-        /* 新增花費明細總表樣式 */
-        .summary-table-container { overflow-x: auto; margin-top: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .summary-table { width: 100%; border-collapse: collapse; background: #fff; font-size: 0.9rem; min-width: 300px; }
-        .summary-table th, .summary-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #f0f0f0; }
-        .summary-table th { background-color: var(--primary-color); color: white; font-weight: 500; font-size: 0.85rem;}
-        .summary-table td { color: var(--text-color); }
-        .summary-table tfoot th { background-color: #e2e8f0; color: #333; font-weight: bold; border-top: 2px solid #ccc; }
-        .summary-table tr:last-child td { border-bottom: none; }
-        .delete-btn-table { color: #e74c3c; background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 0 5px; height: auto; width: auto; }
-
-        .day-nav { display: flex; gap: 6px; position: sticky; top: 0; z-index: 10; background: var(--background-color); padding: 8px 0; margin-bottom: 12px; }
-        .day-nav a { flex: 1; text-align: center; background: var(--primary-color); color: #fff; text-decoration: none; border-radius: 8px; padding: 10px 0; font-size: 0.85rem; font-weight: 500; line-height: 1.3; }
-        .day-nav a small { display: block; opacity: 0.8; font-size: 0.7rem; }
-        .day-card { scroll-margin-top: 64px; }
-        .day-card { background: var(--card-bg); border-radius: 8px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
-        .day-header {
-            background-color: var(--secondary-color); color: white; padding: 15px; margin: 0; font-size: 1.1rem;
-            display: flex; flex-direction: column;
-        }
-        .day-header span:last-child { font-size: 0.9rem; opacity: 0.9; margin-top: 4px; }
-
-        .timeline { padding: 0; margin: 0; list-style: none; }
-        .timeline-item { display: flex; padding: 15px; border-bottom: 1px solid var(--border-color); flex-direction: column; }
-        .timeline-item:last-child { border-bottom: none; }
-
-        .time-col { font-weight: bold; color: var(--primary-color); font-size: 0.95rem; margin-bottom: 5px; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px; }
-        .content-col { flex: 1; }
-        .location-title { margin: 0 0 8px 0; font-size: 1.05rem; color: var(--primary-color); }
-        .description-text { font-size: 0.9rem; color: #555; margin-bottom: 10px; }
-
-        .nav-btn {
-            display: inline-flex; align-items: center; justify-content: center; background-color: var(--accent-color);
-            color: white; text-decoration: none; padding: 10px 15px; border-radius: 8px; font-size: 0.9rem; font-weight: 500;
-            margin-top: 5px; margin-bottom: 10px; width: 100%; box-sizing: border-box;
-        }
-        .nav-icon { margin-right: 8px; font-size: 1.1rem;}
-
-        .food-recommendation { background-color: #f8f4f4; padding: 10px 12px; border-radius: 6px; font-size: 0.9rem; margin-top: 5px; border-left: 3px solid var(--secondary-color); }
-        .food-title { font-weight: bold; color: var(--secondary-color); margin-bottom: 3px; display: block; }
-        .highlight-tag { display: inline-block; background-color: #ffd700; color: #333; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-left: 5px; vertical-align: middle;}
-        .warning-text { color: #d32f2f; font-weight: bold; font-size: 0.9rem; }
-        .safety-alert { background: #fdecea; border-left: 4px solid #d32f2f; color: #b71c1c; padding: 10px 12px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; line-height: 1.5; margin: 8px 0 10px 0; }
-        .safety-alert small { font-weight: normal; color: #b71c1c; }
-        .tl-tag { display: inline-block; background: #fdecea; color: #d32f2f; border: 1px solid #f5c6c6; font-size: 0.72rem; font-weight: bold; line-height: 1.4; padding: 1px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
-
-        .mode-group { margin: 5px 0 10px 0; }
-        .mode-label { font-size: 0.9rem; font-weight: 600; color: var(--primary-color); margin-bottom: 6px; }
-        .mode-label small { font-weight: normal; color: #888; font-size: 0.75rem; }
-        .mode-row { display: flex; gap: 6px; }
-        .mode-btn { flex: 1; text-align: center; text-decoration: none; background: var(--accent-color); color: #fff; padding: 11px 4px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; white-space: nowrap; }
-        .mode-btn.mode-uber { background: #111; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>舊金山五天四夜高執行力旅遊手冊</title>
+<style>
+:root{--primary-color:#1A2C42;--secondary-color:#6A4A4D;--accent-color:#805A5D;--background-color:#f4f5f7;--card-bg:#fff;--text-color:#333;--border-color:#d1d5db;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;color:var(--text-color);background:var(--background-color);margin:0;-webkit-text-size-adjust:100%}
+.container{max-width:800px;margin:0 auto;padding:15px}
+header{text-align:center;margin-bottom:12px;padding:20px 15px;background:var(--primary-color);color:#fff;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,.1)}
+h1{margin:0 0 5px;font-size:1.5rem}.subtitle{font-size:.9rem;opacity:.9;margin:0}
+.info-box{background:var(--card-bg);padding:15px;border-radius:8px;margin-bottom:20px;border-left:4px solid var(--accent-color);box-shadow:0 2px 4px rgba(0,0,0,.05);font-size:.95rem}
+.budget-tracker{border-left-color:var(--primary-color);background:#f0f4f8}
+.budget-stats{display:flex;flex-direction:column;gap:8px;font-weight:bold;margin-bottom:15px;font-size:1rem}
+.budget-stats>div{display:flex;justify-content:space-between;align-items:center;border-bottom:1px dashed #d1d5db;padding-bottom:8px}
+.budget-stats>div:last-child{border-bottom:none;padding-bottom:0}
+.budget-stats .remaining{color:#27ae60}.twd-text{font-size:.85rem;color:#7f8c8d;font-weight:normal;margin-left:5px}
+input[type=text],input[type=number],button{-webkit-appearance:none;appearance:none;box-sizing:border-box;height:48px;font-size:16px!important;border-radius:8px;margin:0;outline:none}
+input[type=text],input[type=number]{padding:0 15px;border:1px solid var(--border-color);background:#fff;color:var(--text-color);width:100%}
+button{background:var(--secondary-color);color:#fff;border:none;font-weight:bold;padding:0 15px;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;white-space:nowrap}
+button:active{background:var(--accent-color)}
+.expense-input{display:flex;flex-direction:column;gap:10px;margin-bottom:15px}
+.expense-amount-row,.inline-action-row{display:flex;gap:10px;width:100%}
+.expense-amount-row input,.inline-action-row input{flex:1.5}.expense-amount-row button,.inline-action-row button{flex:1}
+.inline-expense-container{display:flex;flex-direction:column;gap:10px;margin-top:15px;padding-top:15px;border-top:1px dashed var(--border-color);width:100%}
+.summary-table-container{overflow-x:auto;margin-top:15px;border-radius:8px}
+.summary-table{width:100%;border-collapse:collapse;background:#fff;font-size:.9rem;min-width:300px}
+.summary-table th,.summary-table td{padding:10px 12px;text-align:left;border-bottom:1px solid #f0f0f0}
+.summary-table th{background:var(--primary-color);color:#fff;font-weight:500;font-size:.85rem}
+.summary-table tfoot th{background:#e2e8f0;color:#333;font-weight:bold;border-top:2px solid #ccc}
+.delete-btn-table{color:#e74c3c;background:none;border:none;font-size:1.2rem;padding:0 5px;height:auto;width:auto}
+.sticky-top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--background-color);padding:6px 0;margin-bottom:12px}
+.tabs{display:flex;gap:6px;margin-bottom:6px}
+.tabs a{flex:1;text-align:center;padding:10px 0;border-radius:8px;background:#e3e6ea;color:var(--primary-color);text-decoration:none;font-weight:600;font-size:.95rem}
+.tabs a.active{background:var(--secondary-color);color:#fff}
+.day-nav{display:flex;gap:6px}
+.day-nav a{flex:1;text-align:center;background:var(--primary-color);color:#fff;text-decoration:none;border-radius:8px;padding:8px 0;font-size:.85rem;font-weight:500;line-height:1.3}
+.day-nav a small{display:block;opacity:.8;font-size:.7rem}
+.day-card{scroll-margin-top:130px;background:var(--card-bg);border-radius:8px;margin-bottom:25px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+.day-header{background:var(--secondary-color);color:#fff;padding:15px;margin:0;font-size:1.1rem;display:flex;flex-direction:column}
+.day-header span{font-size:.9rem;opacity:.9;margin-top:4px}.day-header span:first-child{font-size:1.1rem;opacity:1;margin-top:0}
+.timeline{padding:0;margin:0;list-style:none}
+.timeline-item{display:flex;padding:15px;border-bottom:1px solid var(--border-color);flex-direction:column}
+.timeline-item:last-child{border-bottom:none}
+.time-col{font-weight:bold;color:var(--primary-color);font-size:.95rem;margin-bottom:5px;border-bottom:1px solid #f0f0f0;padding-bottom:5px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.content-col{flex:1}
+.location-title{margin:0 0 8px;font-size:1.05rem;color:var(--primary-color)}
+.description-text{font-size:.9rem;color:#555;margin-bottom:10px}
+.nav-btn{display:inline-flex;align-items:center;justify-content:center;background:var(--accent-color);color:#fff;text-decoration:none;padding:10px 15px;border-radius:8px;font-size:.9rem;font-weight:500;margin:5px 0 10px;width:100%;box-sizing:border-box}
+.nav-icon{margin-right:8px;font-size:1.1rem}
+.food-recommendation{background:#f8f4f4;padding:10px 12px;border-radius:6px;font-size:.9rem;margin-top:5px;border-left:3px solid var(--secondary-color)}
+.food-title{font-weight:bold;color:var(--secondary-color);margin-bottom:3px;display:block}
+.highlight-tag{display:inline-block;background:#ffd700;color:#333;padding:2px 6px;border-radius:4px;font-size:.8rem;font-weight:bold;margin-left:5px;vertical-align:middle}
+.warning-wrap{padding:12px 15px;background:#fff0f0;border-bottom:1px solid var(--border-color)}
+.warning-text{color:#d32f2f;font-weight:bold;font-size:.9rem}
+.safety-alert{background:#fdecea;border-left:4px solid #d32f2f;color:#b71c1c;padding:10px 12px;border-radius:6px;font-size:.9rem;font-weight:bold;line-height:1.5;margin:8px 0 10px}
+.tl-tag{display:inline-block;background:#fdecea;color:#d32f2f;border:1px solid #f5c6c6;font-size:.72rem;font-weight:bold;line-height:1.4;padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:middle;white-space:nowrap}
+.mode-group{margin:5px 0 10px}.mode-label{font-size:.9rem;font-weight:600;color:var(--primary-color);margin-bottom:6px}
+.mode-label small{font-weight:normal;color:#888;font-size:.75rem}.mode-row{display:flex;gap:6px}
+.mode-btn{flex:1;text-align:center;text-decoration:none;background:var(--accent-color);color:#fff;padding:11px 4px;border-radius:8px;font-size:.85rem;font-weight:500;white-space:nowrap}
+.mode-btn.mode-uber{background:#111}
+/* 完成 / 略過 / 改時間 */
+.time-row{display:flex;align-items:center;gap:10px;flex:1;min-width:140px}
+.done-cb{width:28px;height:28px;accent-color:#27ae60;flex:none;margin:0}
+.item-tools{display:flex;gap:6px}
+.item-tools button,.time-editor button,.todo-row button{height:34px;width:auto;padding:0 12px;font-size:13px!important;font-weight:600;background:#e8eaee;color:var(--primary-color);border-radius:6px}
+.item-tools button.on{background:var(--secondary-color);color:#fff}
+.time-editor{display:none;flex-basis:100%;gap:6px;align-items:center}.time-editor.open{display:flex}
+.time-editor input[type=text]{height:38px;flex:1;padding:0 10px}
+.time-editor button.save{background:var(--primary-color);color:#fff}
+.edited-tag{background:#fff3cd;color:#8a6d00;font-size:.7rem;padding:1px 6px;border-radius:4px;margin-left:6px}
+.timeline-item.done{background:#f3faf5}.timeline-item.done .location-title{text-decoration:line-through;color:#7a8a80}
+.timeline-item.skipped{background:#f1f1f1}.timeline-item.skipped .time-text,.timeline-item.skipped .location-title{text-decoration:line-through;color:#999}
+.timeline-item.skipped .content-col>:not(.location-title){display:none}
+.day-progress{font-size:.85rem}
+.reset-all{margin:10px 0 30px;background:#999}
+/* 未完成頁 */
+#view-todo{display:none}
+.todo-intro{background:#fff;border-radius:8px;padding:14px;margin-bottom:14px;box-shadow:0 2px 4px rgba(0,0,0,.05);font-size:.95rem}
+.todo-day{background:#fff;border-radius:8px;margin-bottom:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.todo-day h3{margin:0;padding:12px 15px;background:var(--secondary-color);color:#fff;font-size:1rem}
+.todo-row{display:flex;align-items:center;gap:10px;padding:12px 15px;border-bottom:1px solid #eee;flex-wrap:wrap}
+.todo-row:last-child{border-bottom:none}
+.todo-main{flex:1;min-width:150px}.todo-main b{color:var(--primary-color)}.todo-main small{display:block;color:#888}
+.todo-empty{padding:20px;text-align:center;color:#27ae60;font-weight:bold}
+.todo-row a{font-size:13px;font-weight:600;color:var(--accent-color);text-decoration:none;padding:6px 8px}
+.badge{background:#d32f2f;color:#fff;border-radius:10px;font-size:.75rem;padding:0 7px;margin-left:5px}
+</style>
 </head>
 <body>
-
 <div class="container">
-    <header>
-        <h1>🌉 舊金山五天四夜行程</h1>
-        <p class="subtitle">2026/11/12 - 11/16</p>
-    </header>
+<header><h1>🌉 舊金山五天四夜行程</h1><p class="subtitle">2026/11/12 - 11/16</p></header>
 
-    <nav class="day-nav">
-        <a href="#day1">Day 1<small>11/12 四</small></a>
-        <a href="#day2">Day 2<small>11/13 五</small></a>
-        <a href="#day3">Day 3<small>11/14 六</small></a>
-        <a href="#day4">Day 4<small>11/15 日</small></a>
-        <a href="#day5">Day 5<small>11/16 一</small></a>
-    </nav>
-
-    <div class="info-box budget-tracker">
-        <h3 style="margin-top: 0; margin-bottom: 15px; color: var(--primary-color);">💰 預算控管</h3>
-        <div class="budget-stats">
-            <div><span>總預算</span> <span>$<span id="total-budget">600</span> <span class="twd-text">(約 NT$<span id="total-budget-twd"></span>)</span></span></div>
-            <div><span>已花費</span> <span>$<span id="total-spent">0</span> <span class="twd-text">(約 NT$<span id="total-spent-twd">0</span>)</span></span></div>
-            <div class="remaining"><span>剩餘預算</span> <span>$<span id="remaining-budget">600</span> <span class="twd-text">(約 NT$<span id="remaining-budget-twd"></span>)</span></span></div>
-        </div>
-        <div class="expense-input">
-            <input type="text" id="expense-name" placeholder="項目 (例: 晚餐)">
-            <div class="expense-amount-row">
-                <input type="number" id="expense-amount" placeholder="金額 (USD)" step="0.01">
-                <button onclick="addExpense()">記一筆</button>
-            </div>
-        </div>
-        
-        <div class="summary-table-container">
-            <table class="summary-table">
-                <thead>
-                    <tr>
-                        <th>項目</th>
-                        <th>USD</th>
-                        <th>TWD</th>
-                        <th style="text-align: center;">操作</th>
-                    </tr>
-                </thead>
-                <tbody id="expense-tbody">
-                    <!-- 動態生成 -->
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>總計</th>
-                        <th id="table-total-usd">$0.00</th>
-                        <th id="table-total-twd">NT$0</th>
-                        <th></th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
-
-    <div class="day-card" id="day1">
-<h2 class="day-header">
-<span>Day 1 (11/12 週四)</span>
-<span>出發、Polk St、Painted Ladies 與市政廳</span>
-</h2>
-<ul class="timeline">
-<li class="timeline-item"><div class="time-col">06:30</div><div class="content-col"><h3 class="location-title">自墨西哥出發</h3></div></li>
-<li class="timeline-item"><div class="time-col">07:30</div><div class="content-col"><h3 class="location-title">搭乘 Trolley 藍線</h3></div></li>
-<li class="timeline-item"><div class="time-col">08:20</div><div class="content-col"><h3 class="location-title">轉乘接駁至 SAN 機場</h3></div></li>
-<li class="timeline-item"><div class="time-col">08:45</div><div class="content-col"><h3 class="location-title">抵達 SAN 機場報到</h3></div></li>
-<li class="timeline-item">
-<div class="time-col">12:37</div>
-<div class="content-col">
-<h3 class="location-title">抵達 SFO 機場，搭 BART 往市區</h3>
-<p class="description-text">前往<strong>國際線航廈 3 樓</strong>，順著 BART 指標走，搭到市區聯合廣場的 <strong>Powell Street 站</strong>（約 30 分鐘）。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=SFO&amp;destination=Powell+St+BART+Station,+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 機場 ➔ Powell St 站 (BART)</a>
-<div class="food-recommendation"><span class="food-title">💰 票價</span>單程約 $11–12，可用 Clipper 或感應式信用卡/金融卡進出站（感應卡進出站請用同一張）。</div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 13:30</div>
-<div class="content-col">
-<h3 class="location-title">Powell St 站，前往住宿點 <span class="tl-tag">Tenderloin 邊緣</span></h3>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Powell+St+BART+Station,+San+Francisco&amp;destination=Chapter+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> Powell St 站 ➔ Chapter SF (大眾運輸)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 14:00</div>
-<div class="content-col">
-<h3 class="location-title">抵達 Chapter SF 寄放行李 <span class="tl-tag">鄰近 Tenderloin 西側</span></h3>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Chapter+San+Francisco&amp;destination=Cris+Consignment,+San+Francisco&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ Cris 二手店 (步行)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 14:30</div>
-<div class="content-col">
-<h3 class="location-title">Cris Consignment 二手店</h3>
-<p class="description-text">Polk St 商圈與二手店尋寶，約 1 小時。週四營業到 18:00。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Cris+Consignment,+San+Francisco&amp;destination=Painted+Ladies,+Alamo+Square,+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 二手店 ➔ Painted Ladies (大眾運輸)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 15:45</div>
-<div class="content-col">
-<h3 class="location-title">Painted Ladies (Alamo Square) <span class="highlight-tag">明信片機位</span></h3>
-<p class="description-text">舊金山最經典的彩色維多利亞式排屋。到 Alamo Square 公園坡頂拍攝，背景是市中心天際線，停留約 30 分鐘。</p>
-<div class="mode-group"><div class="mode-label">📍 Painted Ladies ➔ Haight St　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=1698%20Haight%20St%2C%20San%20Francisco%2C%20CA%2094117" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=1698%20Haight%20St%2C%20San%20Francisco%2C%20CA%2094117&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=1698%20Haight%20St%2C%20San%20Francisco%2C%20CA%2094117&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 16:30</div>
-<div class="content-col">
-<h3 class="location-title">1698 Haight St（Haight-Ashbury）</h3>
-<p class="description-text">1698 Haight St, San Francisco, CA 94117, United States</p>
-<div class="food-recommendation"><span class="food-title">📝 備註</span>買紀念品磁鐵 🧲</div>
-<div class="mode-group"><div class="mode-label">📍 Haight St ➔ 市政廳　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=San%20Francisco%20City%20Hall%2C%201%20Dr%20Carlton%20B%20Goodlett%20Pl%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=San%20Francisco%20City%20Hall&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=San%20Francisco%20City%20Hall&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 17:15</div>
-<div class="content-col">
-<h3 class="location-title">三藩市市政廳 (City Hall) <span class="tl-tag">Tenderloin 邊緣</span></h3>
-<p class="description-text">從 Alamo Square 往東步行過來，欣賞外觀並拍照。</p>
-<div class="safety-alert">🚨 傍晚的 Civic Center 請小心：在 Polk St 側的正面拍照約 10 分鐘就離開，不要往 Market St / UN Plaza 方向走。</div>
-<div class="mode-group"><div class="mode-label">📍 市政廳 ➔ 晚餐　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Izakaya%20Yoki%2C%20900%20Bush%20St%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Izakaya%20Yoki%2C%20900%20Bush%20St%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Izakaya%20Yoki%2C%20900%20Bush%20St%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">18:00</div>
-<div class="content-col">
-<h3 class="location-title">晚餐時間 <span class="tl-tag">Tenderloin 邊緣</span></h3>
-<div class="safety-alert">🚨 Izakaya Yoki（900 Bush St）在 Lower Nob Hill，緊鄰 Tenderloin 北緣。請在店門口上下車，天黑後不要步行，一律叫 Uber 回旅館。</div>
-<div class="mode-group"><div class="mode-label">📍 晚餐 ➔ 住宿　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-<div class="food-recommendation"><span class="food-title">🍣 晚餐</span>Izakaya Yoki (900 Bush St，日韓料理)<br><small>*評論提到可能是限時吃到飽，訂位時問清楚；週四營業時間請先確認，建議先訂位。</small></div>
-</div>
-</li>
-</ul>
+<div class="sticky-top">
+  <div class="tabs"><a href="#itinerary" id="tab-itin" class="active">📅 行程</a><a href="#todo" id="tab-todo">📋 未完成清單<span class="badge" id="todo-badge" style="display:none">0</span></a></div>
+  <nav class="day-nav" id="day-nav">
+    <a href="#day1">Day 1<small>11/12 四</small></a><a href="#day2">Day 2<small>11/13 五</small></a><a href="#day3">Day 3<small>11/14 六</small></a><a href="#day4">Day 4<small>11/15 日</small></a><a href="#day5">Day 5<small>11/16 一</small></a>
+  </nav>
 </div>
 
-<div class="day-card" id="day2">
-<h2 class="day-header">
-<span>Day 2 (11/13 週五)</span>
-<span>金門大橋娃娃明信片、Lands End 日落</span>
-</h2>
-<ul class="timeline">
-<li class="timeline-item">
-<div class="time-col">07:45</div>
-<div class="content-col">
-<h3 class="location-title">由 Chapter SF 出發</h3>
-<div class="mode-group"><div class="mode-label">📍 住宿 ➔ Brenda's（約 5 分鐘）　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Brenda%27s%20French%20Soul%20Food%2C%20652%20Polk%20St%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Brenda%27s%20French%20Soul%20Food%2C%20652%20Polk%20St%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Brenda%27s%20French%20Soul%20Food%2C%20652%20Polk%20St%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
+<div id="view-itin">
+<div class="info-box budget-tracker">
+<h3 style="margin:0 0 15px;color:var(--primary-color)">💰 預算控管</h3>
+<div class="budget-stats">
+<div><span>總預算</span><span>$<span id="total-budget">600</span> <span class="twd-text">(約 NT$<span id="total-budget-twd"></span>)</span></span></div>
+<div><span>已花費</span><span>$<span id="total-spent">0</span> <span class="twd-text">(約 NT$<span id="total-spent-twd">0</span>)</span></span></div>
+<div class="remaining"><span>剩餘預算</span><span>$<span id="remaining-budget">600</span> <span class="twd-text">(約 NT$<span id="remaining-budget-twd"></span>)</span></span></div>
 </div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 08:00</div>
-<div class="content-col">
-<h3 class="location-title">Brenda's French Soul Food 早餐 <span class="tl-tag">Tenderloin</span></h3>
-<p class="description-text">652 Polk St（Eddy 與 Turk 之間）。招牌是 Beignet 與炸鯰魚蛋 Benedict，平日早上排隊比週末短。約 09:15 吃完，叫 Uber 去 Fort Point（約 20–25 分鐘）。<br><small>*各網站營業時間不一致，多數寫 08:00 開門，出發前請查 Google Maps 或打 415-345-8100。</small></p>
-<div class="safety-alert">🚨 Brenda's 位於 Tenderloin。只在白天前往，在店門口上下車，用 Uber 往返，不要步行穿過周邊街區。</div>
-<div class="mode-group"><div class="mode-label">📍 Brenda's ➔ Fort Point　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Fort%20Point%20National%20Historic%20Site%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Fort%20Point%20National%20Historic%20Site%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Fort%20Point%20National%20Historic%20Site%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-<div class="food-recommendation"><span class="food-title">🥞 早餐</span>Brenda's French Soul Food</div>
+<div class="expense-input"><input type="text" id="expense-name" placeholder="項目 (例: 晚餐)"><div class="expense-amount-row"><input type="number" id="expense-amount" placeholder="金額 (USD)" step="0.01"><button onclick="addExpense()">記一筆</button></div></div>
+<div class="summary-table-container"><table class="summary-table"><thead><tr><th>項目</th><th>USD</th><th>TWD</th><th style="text-align:center">操作</th></tr></thead><tbody id="expense-tbody"></tbody><tfoot><tr><th>總計</th><th id="table-total-usd">$0.00</th><th id="table-total-twd">NT$0</th><th></th></tr></tfoot></table></div>
 </div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 10:00</div>
-<div class="content-col">
-<h3 class="location-title">Fort Point 海角堡</h3>
-<p class="description-text">約 09:45 搭 Uber 抵達 Fort Point 附近，約 10:00 入場 Fort Point（免費，11 月通常週五至週日 10:00–17:00 開放，出發前請上 NPS 官網確認）。停留約 40 分鐘：橋底鋼構與拱形很適合拍娃娃，欄杆和鋼構可以當座位。約 10:40 沿海邊步道走去 Warming Hut（約 15 分鐘）。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Fort+Point+National+Historic+Site&amp;destination=Warming+Hut+Park+Store,+983+Marine+Dr,+San+Francisco&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> Fort Point ➔ Warming Hut (步行)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 10:55</div>
-<div class="content-col">
-<h3 class="location-title">Warming Hut 前的海灘與草地 <span class="highlight-tag">娃娃明信片機位</span></h3>
-<p class="description-text">Crissy Field 西段，面向大橋，一次拍到橋、海灣與沙灘。拍照約 60 分鐘，約 11:55 沿步道往東走去藝術宮（約 40–50 分鐘，沿途還有 East Beach 可拍）。<br><strong>娃娃拍法：</strong>手機壓低到跟娃娃同高，用 2 倍鏡頭，娃娃放在木頭、石頭或沙堆上，大橋虛化在背景。海風大，放娃娃時手要扶著或用小夾子固定。<br><small>*Warming Hut 營業時間我沒有核對；下午起霧機率偏高是網路說法，行前請看天氣預報。</small></p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Warming+Hut+Park+Store&amp;destination=Palace+of+Fine+Arts&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> Warming Hut ➔ 藝術宮 (步行)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 12:45</div>
-<div class="content-col">
-<h3 class="location-title">藝術宮 (Palace of Fine Arts)</h3>
-<div class="mode-group"><div class="mode-label">📍 藝術宮 ➔ As Quoted（約 10 分鐘）　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=As%20Quoted%2C%203613%20Sacramento%20St%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=As%20Quoted%2C%203613%20Sacramento%20St%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=As%20Quoted%2C%203613%20Sacramento%20St%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 13:15</div>
-<div class="content-col">
-<h3 class="location-title">As Quoted 午餐</h3>
-<p class="description-text">3613 Sacramento St（Presidio Heights），全無麩質咖啡廳，營業至 15:00，週日公休。請在 <strong>14:30 前</strong>結束午餐，叫 Uber 前往 Lands End（車程約 15–20 分鐘）。<br><small>*出發前請確認週五營業時間。</small></p>
-<div class="mode-group"><div class="mode-label">📍 As Quoted ➔ Sutro Baths　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Sutro%20Baths%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Sutro%20Baths%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Sutro%20Baths%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-<div class="food-recommendation"><span class="food-title">🥪 午餐</span>As Quoted (無麩質健康餐飲)</div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 15:15</div>
-<div class="content-col">
-<h3 class="location-title">Lands End / Sutro Baths 日落 <span class="highlight-tag">明信片機位</span></h3>
-<p class="description-text">太平洋海岸懸崖步道與 Sutro Baths 廢墟，沿海邊慢慢走、拍照。<strong>日落約 16:55</strong>（估算，出發前請用天氣 App 再確認），在 Sutro Baths 一帶看日落，約 17:15 離開。<br><small>*海邊風大，務必帶防風外套；天黑後步道光線不足，日落後就收工。</small></p>
-<div class="safety-alert">🚨 日落後步道無照明且偏僻：16:50 開始邊走邊叫 Uber，在有路燈的 Point Lobos Ave 路邊上車，不要搭 Muni，也不要在天黑後留在步道。</div>
-<div class="mode-group"><div class="mode-label">📍 Lands End ➔ 晚餐　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Kitchen%20Aloha%2C%20752%20Van%20Ness%20Ave%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Kitchen%20Aloha%2C%20752%20Van%20Ness%20Ave%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Kitchen%20Aloha%2C%20752%20Van%20Ness%20Ave%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-<div class="food-recommendation"><span class="food-title">☁️ 天氣備案</span>若當天大霧或下雨：改去金門公園，建議 15:00 前抵達，先逛日本茶園（11 月最後入場 16:30），再上 de Young 觀景塔（通常比博物館早 1 小時關，約 16:15，週五是否延長請查官網）。</div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 18:00</div>
-<div class="content-col">
-<h3 class="location-title">晚餐時間 <span class="tl-tag">Tenderloin 邊緣</span></h3>
-<p class="description-text"><small>*Kitchen Aloha 地址：752 Van Ness Ave。17:15 離開 Lands End，Uber 約 30 分鐘，約 18:00 到；請確認營業時間，必要時先訂位。</small></p>
-<div class="safety-alert">🚨 Kitchen Aloha 在 Tenderloin 邊緣。步行回旅館約 13 分鐘：只走 Van Ness / Franklin 大馬路，不要抄 Larkin、Polk 或小巷捷徑，手機收好。若下雨、疲累或晚於 20:30 離開，改叫 Uber。</div>
-<div class="mode-group"><div class="mode-label">📍 餐廳 ➔ 住宿　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-<div class="food-recommendation"><span class="food-title">🍱 晚餐</span>Kitchen Aloha (日式/夏威夷料理)</div>
-</div>
-</li>
-</ul>
+<div id="days"></div>
+<button class="reset-all" id="reset-all">重設所有勾選與調整</button>
 </div>
 
-<div class="day-card" id="day3">
-<h2 class="day-header">
-<span>Day 3 (11/14 週六)</span>
-<span>海邊散步、農夫市集、叮叮車、九曲花街與夜間郵輪</span>
-</h2>
-<div style="padding: 12px 15px; background: #fff0f0; border-bottom: 1px solid var(--border-color);">
-<div class="warning-text">⚠️ 17:30 郵輪已訂票，最晚 17:00 要在 Pier 43½ 報到。下午每一站都排了時間：九曲花街約 30 分鐘、吉拉德里廣場約 30 分鐘。若叮叮車排隊太久，請從 Pier 39 的自由時間扣，不要壓縮前兩站。</div>
-</div>
-<ul class="timeline">
-<li class="timeline-item">
-<div class="time-col">08:30</div>
-<div class="content-col">
-<h3 class="location-title">由 Chapter SF 出發</h3>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Chapter+San+Francisco&amp;destination=Napier+Lane,+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ Napier Lane (大眾運輸)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 09:15</div>
-<div class="content-col">
-<h3 class="location-title">Napier Lane</h3>
-<p class="description-text">Telegraph Hill 的登高階梯，一路往下沿 Embarcadero 往南走。<br><small>*KML 座標為概略位置，請在地圖上確認。</small></p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Napier+Lane,+San+Francisco&amp;destination=Pier+7,+San+Francisco&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> Napier Lane ➔ Pier 7 (步行)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 10:15</div>
-<div class="content-col">
-<h3 class="location-title">Pier 7</h3>
-<p class="description-text">沿 Embarcadero 往南的安靜海邊步道。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Pier+7,+San+Francisco&amp;destination=Ferry+Building,+San+Francisco&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> Pier 7 ➔ Ferry Building (步行)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 10:45</div>
-<div class="content-col">
-<h3 class="location-title">Ferry Building 農夫市集 <span class="highlight-tag">週六限定</span></h3>
-<p class="description-text">舊金山最大最經典的農夫市集！</p>
-<p class="description-text"><small>*逛到約 12:15 就出發，步行到 Powell 約 25–30 分鐘（也可搭 Muni Metro 一站），多留出週末叮叮車排隊的緩衝。</small></p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Ferry+Building,+San+Francisco&amp;destination=Powell+and+Market+Cable+Car+Turnaround&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 農夫市集 ➔ 叮叮車總站 (步行/Muni Metro)</a>
-<div class="food-recommendation"><span class="food-title">🍳 早午餐</span>市集內享用熟食與咖啡</div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 12:45</div>
-<div class="content-col">
-<h3 class="location-title">Powell 叮叮車總站 <span class="highlight-tag">經典 Powell-Hyde 線</span> <span class="tl-tag">Tenderloin 邊緣</span></h3>
-<p class="description-text">從 <strong>Powell St 總站</strong> 上車，搭乘 Powell-Hyde 線，沿途經過聯合廣場、中國城，並從高處俯瞰海灣，在 <strong>Hyde &amp; Lombard</strong> 下車去九曲花街。<br><small>*週末排隊人潮較多，請抓充裕時間；若排太久，從 Pier 39 的自由時間扣。</small></p>
-<div class="food-recommendation"><span class="food-title">💰 票價</span>單程票 $9（不可轉乘其他線）。Powell 總站 08:00–17:00 需先買好票才能上車，可在售票亭或用 MuniMobile App 購買。</div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 13:40</div>
-<div class="content-col">
-<h3 class="location-title">九曲花街 (Lombard Street) <span class="highlight-tag">Hyde &amp; Lombard 下車</span></h3>
-<p class="description-text">叮叮車在 Hyde &amp; Lombard 站下車，就在彎曲路段的最高處。約 30 分鐘拍完三個機位：<br><strong>① 上方往下俯瞰（先拍這張）：</strong>娃娃放在路口人行道的矮牆或階梯扶手上，手機壓低拍，背景是彎道與海灣；站在 Hyde &amp; Lombard 路口最上方，前景是第一、二個髮夾彎，遠處是 Coit Tower、海灣與 Bay Bridge。<br><strong>② 中途階梯：</strong>沿側邊階梯往下走，到一半近拍繡球花與彎道。<br><strong>③ 最下方 Leavenworth 路口（由下往上）：</strong>回頭拍整條 8 個彎的經典明信片角度，下午光線會照亮彎道。<br><small>*娃娃不要放在車道或住戶車庫前，也別離手；坡頂風大。人多時請站在人行道或階梯上。叮叮車單程票在這站結束，之後步行去吉拉德里廣場（約 15 分鐘，下坡為主）。</small></p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Lombard+Street+Crooked+Section,+San+Francisco&amp;destination=Ghirardelli+Square&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 九曲花街 ➔ 吉拉德里廣場 (步行)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 14:30</div>
-<div class="content-col">
-<h3 class="location-title">吉拉德里廣場 (Ghirardelli Square)</h3>
-<p class="description-text">買片巧克力或喝杯熱飲，稍作休息。<br><small>*停留約 30 分鐘，約 15:00 走去 Pier 39（海濱步行約 20 分鐘）。</small></p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Ghirardelli+Square&amp;destination=Pier+39&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 廣場 ➔ 39號碼頭 (海濱步行)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 15:15</div>
-<div class="content-col">
-<h3 class="location-title">Pier 39 看海獅</h3>
-<p class="description-text">先到 K 碼頭 (K-Dock) 看海獅曬太陽，約 15:45 在 Pier 39 或漁人碼頭一帶簡單吃晚餐（自選，吃快一點，船上風大別空腹）。最晚 16:30 出發前往 Pier 43½（步行約 10–15 分鐘），17:00 前到碼頭報到。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Pier+39&amp;destination=Pier+43+1/2,+Fisherman's+Wharf,+San+Francisco,+CA&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 39號碼頭 ➔ Pier 43½ (步行)</a>
-<div class="food-recommendation"><span class="food-title">🍽️ 晚餐</span>Pier 39 / 漁人碼頭一帶自選（郵輪前先吃）</div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">17:30–19:30</div>
-<div class="content-col">
-<h3 class="location-title">🚢 Pier 43½ (Fisherman's Wharf) 夜間郵輪 <span class="highlight-tag">已訂票</span></h3>
-<p class="description-text"><strong>17:30 開船，約 2 小時</strong>，在 <strong>Pier 43½, Fisherman's Wharf</strong> 登船（出發地點）。請<strong>提前 30 分鐘（約 17:00）到碼頭報到</strong>。11 月日落約 17:00，開船時天色已暗，可欣賞<strong>點燈的金門大橋與城市夜景</strong>。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Pier+39&amp;destination=Pier+43+1/2,+Fisherman's+Wharf,+San+Francisco,+CA&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 前往 Pier 43½ (步行)</a>
-<div class="food-recommendation"><span class="food-title">💡 提醒</span>海風極強，務必穿戴防風保暖衣物與毛帽！船票已訂，請先把電子票券截圖存在手機備用。</div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 20:00</div>
-<div class="content-col">
-<h3 class="location-title">Top of the Mark 夜景</h3>
-<p class="description-text">郵輪 19:30 靠岸後，從碼頭叫 Uber 過來（車程約 15–20 分鐘，約 $15–20）。週六營業到約 00:30，建議先訂位並確認當天營業時間。</p>
-<div class="mode-group"><div class="mode-label">📍 碼頭 ➔ Top of the Mark　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Top%20of%20the%20Mark%2C%20999%20California%20St%2C%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Top%20of%20the%20Mark%2C%20999%20California%20St%2C%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Top%20of%20the%20Mark%2C%20999%20California%20St%2C%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-<div class="safety-alert">🚨 約 22:30 回旅館一定要叫 Uber，不要步行。請在酒吧大廳叫車，車到了再出門。</div>
-<div class="mode-group"><div class="mode-label">📍 酒吧 ➔ 住宿　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-</div>
-</li>
-</ul>
-</div>
-
-<div class="day-card" id="day4">
-<h2 class="day-header">
-<span>Day 4 (11/15 週日)</span>
-<span>使命區壁畫、精品託售與嬉皮區</span>
-</h2>
-<ul class="timeline">
-<li class="timeline-item">
-<div class="time-col">09:30</div>
-<div class="content-col">
-<h3 class="location-title">由 Chapter SF 出發</h3>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Chapter+San+Francisco&amp;destination=Clarion+Alley,+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ Clarion Alley (大眾運輸)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 10:00</div>
-<div class="content-col">
-<h3 class="location-title">Clarion Alley 壁畫</h3>
-<p class="description-text">舊金山拉丁文化最濃的使命區 (Mission District) 街頭壁畫。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Clarion+Alley,+San+Francisco&amp;destination=Temo's+Cafe,+3000+24th+St,+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 壁畫 ➔ Temo's Cafe (大眾運輸)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 10:45</div>
-<div class="content-col">
-<h3 class="location-title">Temo's Cafe</h3>
-<p class="description-text">位於 24th St，喝咖啡後步行約 5–10 分鐘走去 Balmy Alley 壁畫巷（約 20 分鐘），再前往 Sui Generis。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Temo's+Cafe,+3000+24th+St,+San+Francisco&amp;destination=Sui+Generis+Designer+Consignment,+2231+Market+St,+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> Temo's ➔ 託售中心 (大眾運輸)</a>
-<div class="food-recommendation"><span class="food-title">☕ 咖啡/早午餐</span>TEMO's Cafe，或 24th St 附近自選</div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 12:00</div>
-<div class="content-col">
-<h3 class="location-title">Sui Generis 精品託售</h3>
-<p class="description-text">位於 Market St (Castro 旁)，週日營業時間約 11:00–17:00。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Sui+Generis+Designer+Consignment,+2231+Market+St,+San+Francisco&amp;destination=Wasteland,+1660+Haight+St,+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 託售中心 ➔ Wasteland (大眾運輸)</a>
-<div class="food-recommendation"><span class="food-title">🍴 午餐</span>Castro / Market St 一帶自選</div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 13:15</div>
-<div class="content-col">
-<h3 class="location-title">Wasteland 古著店 <span class="highlight-tag">必逛推薦</span></h3>
-<p class="description-text">超人氣的精品古著店！設計師單品與復古女裝，店內裝潢也極具特色，值得好好尋寶。Haight St 由東往西逛。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Wasteland,+1660+Haight+St,+San+Francisco&amp;destination=Amoeba+Music,+1855+Haight+St,+San+Francisco&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> Wasteland ➔ Amoeba (步行)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 14:30</div>
-<div class="content-col">
-<h3 class="location-title">Amoeba Music <span class="highlight-tag">嬉皮聖地</span></h3>
-<p class="description-text">巨大的獨立唱片店，感受 60 年代嬉皮士文化。每天 11:00 開門。約 16:00 從這裡搭 Uber 前往雙峰（車程約 10–15 分鐘）。</p>
-<div class="mode-group"><div class="mode-label">📍 Amoeba ➔ 雙峰　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Twin%20Peaks" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Twin%20Peaks&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Twin%20Peaks&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 16:15</div>
-<div class="content-col">
-<h3 class="location-title">雙峰 (Twin Peaks) 夕陽</h3>
-<p class="description-text">360度俯瞰舊金山全景的最佳地點。<br><small>*備案：若不想上雙峰，也可選擇附近的 <strong>Bernal Heights Park</strong> 看日落與城區風景。</small></p>
-<div class="safety-alert">🚨 日落後觀景台又暗、人又少：看完日落（約 16:55）就離開，16:50 先叫好 Uber，不要等天全黑。</div>
-<div class="mode-group"><div class="mode-label">📍 雙峰 ➔ Castro 晚餐　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Super%20Duper%20Burgers%20Castro%20San%20Francisco" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Super%20Duper%20Burgers%20Castro%20San%20Francisco&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Super%20Duper%20Burgers%20Castro%20San%20Francisco&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 17:30</div>
-<div class="content-col">
-<h3 class="location-title">晚餐時間</h3>
-<p class="description-text">與 Sui Generis 同一條街 (Market St)。</p>
-<div class="safety-alert">🚨 晚上不搭 Muni：回程路線可能經過 Market St / Van Ness 一帶，改叫 Uber 直接送到旅館門口。</div>
-<div class="mode-group"><div class="mode-label">📍 晚餐 ➔ 住宿　<small>選擇交通方式</small></div><div class="mode-row"><a href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=transit" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chapter%20San%20Francisco%2C%201533%20Franklin%20St%2C%20San%20Francisco%2C%20CA%2094109&amp;travelmode=walking" target="_blank" class="mode-btn">🚶 步行</a></div></div>
-<div class="food-recommendation"><span class="food-title">🍔 晚餐</span>Super Duper Burgers (Castro)</div>
-</div>
-</li>
-</ul>
-</div>
-
-<div class="day-card" id="day5">
-<h2 class="day-header">
-<span>Day 5 (11/16 週一)</span>
-<span>California Line 叮叮車、唐人街與機場歸途</span>
-</h2>
-<div style="padding: 12px 15px; background: #fff0f0; border-bottom: 1px solid var(--border-color);">
-<div class="warning-text">⚠️ 航班 14:44 起飛。務必於 11:30 前離開住宿點。</div>
-</div>
-<ul class="timeline">
-<li class="timeline-item">
-<div class="time-col">08:15</div>
-<div class="content-col">
-<h3 class="location-title">由 Chapter SF 出發</h3>
-<p class="description-text">步行到 California Line 西端起點站（Van Ness &amp; California），約 3–5 分鐘。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Chapter+San+Francisco&amp;destination=California+St+%26+Van+Ness+Ave,+San+Francisco&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ Van Ness &amp; California 起點站 (步行)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 08:30</div>
-<div class="content-col">
-<h3 class="location-title">🚋 California Line 叮叮車 <span class="highlight-tag">往東搭</span></h3>
-<p class="description-text">在起點站上車（有座位），往東沿 California St 下坡，經過 Nob Hill，到 <strong>Grant &amp; California（唐人街）</strong>下車。<br><small>*此站不是總站售票亭，請備 $9 零錢給車掌，或先用 MuniMobile 買好票。</small></p>
-<div class="food-recommendation"><span class="food-title">💰 票價</span>單程票 $9，與 Day 3 的 Powell-Hyde 線是不同線，需另外買票。</div>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 08:45</div>
-<div class="content-col">
-<h3 class="location-title">舊金山唐人街</h3>
-<p class="description-text">從 Grant &amp; California 往南走兩個街區就是龍門（Grant &amp; Bush）。</p>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Chinatown+Dragon+Gate,+San+Francisco&amp;destination=Union+Square,+San+Francisco&amp;travelmode=walking" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 唐人街 ➔ 聯合廣場 (步行)</a>
-</div>
-</li>
-<li class="timeline-item">
-<div class="time-col">約 09:45</div>
-<div class="content-col">
-<h3 class="location-title">聯合廣場 &amp; Powell St <span class="tl-tag">Tenderloin 邊緣</span></h3>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Union+Square,+San+Francisco&amp;destination=Chapter+San+Francisco&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 聯合廣場 ➔ 住宿 (大眾運輸)</a>
-</div>
-</li>
-<li class="timeline-item"><div class="time-col">10:30</div><div class="content-col"><h3 class="location-title">返回 Chapter SF 取行李</h3></div></li>
-<li class="timeline-item">
-<div class="time-col">11:30</div>
-<div class="content-col">
-<h3 class="location-title">出發前往 SFO 機場</h3>
-<a href="https://www.google.com/maps/dir/?api=1&amp;origin=Chapter+San+Francisco&amp;destination=SFO&amp;travelmode=transit" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> 住宿 ➔ SFO 機場 (BART)</a>
-</div>
-</li>
-<li class="timeline-item"><div class="time-col">14:44</div><div class="content-col"><h3 class="location-title">搭機起飛</h3></div></li>
-</ul>
+<div id="view-todo">
+<div class="todo-intro" id="todo-intro"></div>
+<div id="todo-list"></div>
 </div>
 </div>
 
 <script>
-    const INITIAL_BUDGET = 600; // 預算 (USD)，不含機票、住宿與購物
-    const EXCHANGE_RATE = 31.5; // 設定美金對台幣匯率
-    let expenses = [];
-    try {
-        const saved = JSON.parse(localStorage.getItem('sf_expenses'));
-        if (Array.isArray(saved)) {
-            expenses = saved.filter(e => e && typeof e.amount === 'number' && isFinite(e.amount));
-        }
-    } catch (e) { expenses = []; }
+/* ---------- 連結小工具 ---------- */
+const HOME="Chapter San Francisco, 1533 Franklin St, San Francisco, CA 94109";
+const E=encodeURIComponent;
+const U=a=>"https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff%5Bformatted_address%5D="+E(a);
+const G=(a,m)=>"https://www.google.com/maps/dir/?api=1&destination="+E(a)+"&travelmode="+m;
+const MG=(label,addr)=>`<div class="mode-group"><div class="mode-label">📍 ${label}　<small>選擇交通方式</small></div><div class="mode-row"><a href="${U(addr)}" target="_blank" class="mode-btn mode-uber">🚕 Uber</a><a href="${G(addr,'transit')}" target="_blank" class="mode-btn">🚌 公車/地鐵</a><a href="${G(addr,'walking')}" target="_blank" class="mode-btn">🚶 步行</a></div></div>`;
+const N=(label,o,d,m)=>`<a href="https://www.google.com/maps/dir/?api=1&origin=${E(o)}&destination=${E(d)}&travelmode=${m}" target="_blank" class="nav-btn"><span class="nav-icon">🧭</span> ${label}</a>`;
+const D=t=>`<p class="description-text">${t}</p>`;
+const F=(t,x)=>`<div class="food-recommendation"><span class="food-title">${t}</span>${x}</div>`;
+const A=t=>`<div class="safety-alert">🚨 ${t}</div>`;
+const TL='<span class="tl-tag">Tenderloin 邊緣</span>';
+const HL=t=>`<span class="highlight-tag">${t}</span>`;
 
-    function saveExpenses() {
-        try { localStorage.setItem('sf_expenses', JSON.stringify(expenses)); } catch (e) { /* 隱私模式等情況下略過 */ }
-    }
+/* ---------- 行程資料（s=1 代表景點/餐廳，有完成勾選框，會出現在未完成清單） ---------- */
+const DAYS=[
+{id:"day1",n:1,h:"Day 1 (11/12 週四)",sub:"出發、Polk St、Painted Ladies 與市政廳",items:[
+{t:"06:30",h:"自墨西哥出發"},{t:"07:30",h:"搭乘 Trolley 藍線"},{t:"08:20",h:"轉乘接駁至 SAN 機場"},{t:"08:45",h:"抵達 SAN 機場報到"},
+{t:"12:37",h:"抵達 SFO 機場，搭 BART 往市區",b:D("前往<strong>國際線航廈 3 樓</strong>，順著 BART 指標走，搭到市區聯合廣場的 <strong>Powell Street 站</strong>（約 30 分鐘）。")+N("機場 ➔ Powell St 站 (BART)","SFO","Powell St BART Station, San Francisco","transit")+F("💰 票價","單程約 $11–12，可用 Clipper 或感應式信用卡/金融卡進出站（感應卡進出站請用同一張）。")},
+{t:"約 13:30",h:"Powell St 站，前往住宿點 "+TL,b:N("Powell St 站 ➔ Chapter SF (大眾運輸)","Powell St BART Station, San Francisco","Chapter San Francisco","transit")},
+{t:"約 14:00",h:'抵達 Chapter SF 寄放行李 <span class="tl-tag">鄰近 Tenderloin 西側</span>',b:N("住宿 ➔ Cris 二手店 (步行)","Chapter San Francisco","Cris Consignment, San Francisco","walking")},
+{t:"約 14:30",s:1,h:"Cris Consignment 二手店",b:D("Polk St 商圈與二手店尋寶，約 1 小時。週四營業到 18:00。")+N("二手店 ➔ Painted Ladies (大眾運輸)","Cris Consignment, San Francisco","Painted Ladies, Alamo Square, San Francisco","transit")},
+{t:"約 15:45",s:1,h:"Painted Ladies (Alamo Square) "+HL("明信片機位"),b:D("舊金山最經典的彩色維多利亞式排屋。到 Alamo Square 公園坡頂拍攝，背景是市中心天際線，停留約 30 分鐘。")+MG("Painted Ladies ➔ Haight St","1698 Haight St, San Francisco, CA 94117")},
+{t:"約 16:30",s:1,h:"1698 Haight St（Haight-Ashbury）",b:D("1698 Haight St, San Francisco, CA 94117, United States")+F("📝 備註","買紀念品磁鐵 🧲")+MG("Haight St ➔ 市政廳","San Francisco City Hall, 1 Dr Carlton B Goodlett Pl, San Francisco")},
+{t:"約 17:15",s:1,h:"三藩市市政廳 (City Hall) "+TL,b:D("從 Alamo Square 往東步行過來，欣賞外觀並拍照。")+A("傍晚的 Civic Center 請小心：在 Polk St 側的正面拍照約 10 分鐘就離開，不要往 Market St / UN Plaza 方向走。")+MG("市政廳 ➔ 晚餐","Izakaya Yoki, 900 Bush St, San Francisco")},
+{t:"18:00",s:1,h:"晚餐時間 "+TL,b:A("Izakaya Yoki（900 Bush St）在 Lower Nob Hill，緊鄰 Tenderloin 北緣。請在店門口上下車，天黑後不要步行，一律叫 Uber 回旅館。")+MG("晚餐 ➔ 住宿",HOME)+F("🍣 晚餐","Izakaya Yoki (900 Bush St，日韓料理)<br><small>*評論提到可能是限時吃到飽，訂位時問清楚；週四營業時間請先確認，建議先訂位。</small>")}
+]},
+{id:"day2",n:2,h:"Day 2 (11/13 週五)",sub:"金門大橋娃娃明信片、Lands End 日落",items:[
+{t:"07:45",h:"由 Chapter SF 出發",b:MG("住宿 ➔ Brenda's（約 5 分鐘）","Brenda's French Soul Food, 652 Polk St, San Francisco")},
+{t:"約 08:00",s:1,h:"Brenda's French Soul Food 早餐 "+'<span class="tl-tag">Tenderloin</span>',b:D("652 Polk St（Eddy 與 Turk 之間）。招牌是 Beignet 與炸鯰魚蛋 Benedict，平日早上排隊比週末短。約 09:15 吃完，叫 Uber 去 Fort Point（約 20–25 分鐘）。<br><small>*各網站營業時間不一致，多數寫 08:00 開門，出發前請查 Google Maps 或打 415-345-8100。</small>")+A("Brenda's 位於 Tenderloin。只在白天前往，在店門口上下車，用 Uber 往返，不要步行穿過周邊街區。")+MG("Brenda's ➔ Fort Point","Fort Point National Historic Site, San Francisco")+F("🥞 早餐","Brenda's French Soul Food")},
+{t:"約 10:00",s:1,h:"Fort Point 海角堡",b:D("約 09:45 搭 Uber 抵達 Fort Point 附近，約 10:00 入場 Fort Point（免費，11 月通常週五至週日 10:00–17:00 開放，出發前請上 NPS 官網確認）。停留約 40 分鐘：橋底鋼構與拱形很適合拍娃娃，欄杆和鋼構可以當座位。約 10:40 沿海邊步道走去 Warming Hut（約 15 分鐘）。")+N("Fort Point ➔ Warming Hut (步行)","Fort Point National Historic Site","Warming Hut Park Store, 983 Marine Dr, San Francisco","walking")},
+{t:"約 10:55",s:1,h:"Warming Hut 前的海灘與草地 "+HL("娃娃明信片機位"),b:D("Crissy Field 西段，面向大橋，一次拍到橋、海灣與沙灘。拍照約 60 分鐘，約 11:55 沿步道往東走去藝術宮（約 40–50 分鐘，沿途還有 East Beach 可拍）。<br><strong>娃娃拍法：</strong>手機壓低到跟娃娃同高，用 2 倍鏡頭，娃娃放在木頭、石頭或沙堆上，大橋虛化在背景。海風大，放娃娃時手要扶著或用小夾子固定。<br><small>*Warming Hut 營業時間我沒有核對；下午起霧機率偏高是網路說法，行前請看天氣預報。</small>")+N("Warming Hut ➔ 藝術宮 (步行)","Warming Hut Park Store","Palace of Fine Arts","walking")},
+{t:"約 12:45",s:1,h:"藝術宮 (Palace of Fine Arts)",b:MG("藝術宮 ➔ As Quoted（約 10 分鐘）","As Quoted, 3613 Sacramento St, San Francisco")},
+{t:"約 13:15",s:1,h:"As Quoted 午餐",b:D("3613 Sacramento St（Presidio Heights），全無麩質咖啡廳，營業至 15:00，週日公休。請在 <strong>14:30 前</strong>結束午餐，叫 Uber 前往 Lands End（車程約 15–20 分鐘）。<br><small>*出發前請確認週五營業時間。</small>")+MG("As Quoted ➔ Sutro Baths","Sutro Baths, San Francisco")+F("🥪 午餐","As Quoted (無麩質健康餐飲)")},
+{t:"約 15:15",s:1,h:"Lands End / Sutro Baths 日落 "+HL("明信片機位"),b:D("太平洋海岸懸崖步道與 Sutro Baths 廢墟，沿海邊慢慢走、拍照。<strong>日落約 16:55</strong>（估算，出發前請用天氣 App 再確認），在 Sutro Baths 一帶看日落，約 17:15 離開。<br><small>*海邊風大，務必帶防風外套；天黑後步道光線不足，日落後就收工。</small>")+A("日落後步道無照明且偏僻：16:50 開始邊走邊叫 Uber，在有路燈的 Point Lobos Ave 路邊上車，不要搭 Muni，也不要在天黑後留在步道。")+MG("Lands End ➔ 晚餐","Kitchen Aloha, 752 Van Ness Ave, San Francisco")+F("☁️ 天氣備案","若當天大霧或下雨：改去金門公園，建議 15:00 前抵達，先逛日本茶園（11 月最後入場 16:30），再上 de Young 觀景塔（通常比博物館早 1 小時關，約 16:15，週五是否延長請查官網）。")},
+{t:"約 18:00",s:1,h:"晚餐時間 "+TL,b:D("<small>*Kitchen Aloha 地址：752 Van Ness Ave。17:15 離開 Lands End，Uber 約 30 分鐘，約 18:00 到；請確認營業時間，必要時先訂位。</small>")+A("Kitchen Aloha 在 Tenderloin 邊緣。步行回旅館約 13 分鐘：只走 Van Ness / Franklin 大馬路，不要抄 Larkin、Polk 或小巷捷徑，手機收好。若下雨、疲累或晚於 20:30 離開，改叫 Uber。")+MG("餐廳 ➔ 住宿",HOME)+F("🍱 晚餐","Kitchen Aloha (日式/夏威夷料理)")}
+]},
+{id:"day3",n:3,h:"Day 3 (11/14 週六)",sub:"海邊散步、農夫市集、叮叮車、九曲花街與夜間郵輪",warn:"⚠️ 17:30 郵輪已訂票，最晚 17:00 要在 Pier 43½ 報到。下午每一站都排了時間：九曲花街約 30 分鐘、吉拉德里廣場約 30 分鐘。若叮叮車排隊太久，請從 Pier 39 的自由時間扣，不要壓縮前兩站。",items:[
+{t:"08:30",h:"由 Chapter SF 出發",b:N("住宿 ➔ Napier Lane (大眾運輸)","Chapter San Francisco","Napier Lane, San Francisco","transit")},
+{t:"約 09:15",s:1,h:"Napier Lane",b:D("Telegraph Hill 的登高階梯，一路往下沿 Embarcadero 往南走。<br><small>*KML 座標為概略位置，請在地圖上確認。</small>")+N("Napier Lane ➔ Pier 7 (步行)","Napier Lane, San Francisco","Pier 7, San Francisco","walking")},
+{t:"約 10:15",s:1,h:"Pier 7",b:D("沿 Embarcadero 往南的安靜海邊步道。")+N("Pier 7 ➔ Ferry Building (步行)","Pier 7, San Francisco","Ferry Building, San Francisco","walking")},
+{t:"約 10:45",s:1,h:"Ferry Building 農夫市集 "+HL("週六限定"),b:D("舊金山最大最經典的農夫市集！")+D("<small>*逛到約 12:15 就出發，步行到 Powell 約 25–30 分鐘（也可搭 Muni Metro 一站），多留出週末叮叮車排隊的緩衝。</small>")+N("農夫市集 ➔ 叮叮車總站 (步行/Muni Metro)","Ferry Building, San Francisco","Powell and Market Cable Car Turnaround","transit")+F("🍳 早午餐","市集內享用熟食與咖啡")},
+{t:"約 12:45",s:1,h:"Powell 叮叮車總站 "+HL("經典 Powell-Hyde 線")+" "+TL,b:D("從 <strong>Powell St 總站</strong> 上車，搭乘 Powell-Hyde 線，沿途經過聯合廣場、中國城，並從高處俯瞰海灣，在 <strong>Hyde &amp; Lombard</strong> 下車去九曲花街。<br><small>*週末排隊人潮較多，請抓充裕時間；若排太久，從 Pier 39 的自由時間扣。</small>")+F("💰 票價","單程票 $9（不可轉乘其他線）。Powell 總站 08:00–17:00 需先買好票才能上車，可在售票亭或用 MuniMobile App 購買。")},
+{t:"約 13:40",s:1,h:"九曲花街 (Lombard Street) "+HL("Hyde &amp; Lombard 下車"),b:D("叮叮車在 Hyde &amp; Lombard 站下車，就在彎曲路段的最高處。約 30 分鐘拍完三個機位：<br><strong>① 上方往下俯瞰（先拍這張）：</strong>娃娃放在路口人行道的矮牆或階梯扶手上，手機壓低拍，背景是彎道與海灣；站在 Hyde &amp; Lombard 路口最上方，前景是第一、二個髮夾彎，遠處是 Coit Tower、海灣與 Bay Bridge。<br><strong>② 中途階梯：</strong>沿側邊階梯往下走，到一半近拍繡球花與彎道。<br><strong>③ 最下方 Leavenworth 路口（由下往上）：</strong>回頭拍整條 8 個彎的經典明信片角度，下午光線會照亮彎道。<br><small>*娃娃不要放在車道或住戶車庫前，也別離手；坡頂風大。人多時請站在人行道或階梯上。叮叮車單程票在這站結束，之後步行去吉拉德里廣場（約 15 分鐘，下坡為主）。</small>")+N("九曲花街 ➔ 吉拉德里廣場 (步行)","Lombard Street Crooked Section, San Francisco","Ghirardelli Square","walking")},
+{t:"約 14:30",s:1,h:"吉拉德里廣場 (Ghirardelli Square)",b:D("買片巧克力或喝杯熱飲，稍作休息。<br><small>*停留約 30 分鐘，約 15:00 走去 Pier 39（海濱步行約 20 分鐘）。</small>")+N("廣場 ➔ 39號碼頭 (海濱步行)","Ghirardelli Square","Pier 39","walking")},
+{t:"約 15:15",s:1,h:"Pier 39 看海獅",b:D("先到 K 碼頭 (K-Dock) 看海獅曬太陽，約 15:45 在 Pier 39 或漁人碼頭一帶簡單吃晚餐（自選，吃快一點，船上風大別空腹）。最晚 16:30 出發前往 Pier 43½（步行約 10–15 分鐘），17:00 前到碼頭報到。")+N("39號碼頭 ➔ Pier 43½ (步行)","Pier 39","Pier 43 1/2, Fisherman's Wharf, San Francisco, CA","walking")+F("🍽️ 晚餐","Pier 39 / 漁人碼頭一帶自選（郵輪前先吃）")},
+{t:"17:30–19:30",s:1,h:"🚢 Pier 43½ (Fisherman's Wharf) 夜間郵輪 "+HL("已訂票"),b:D("<strong>17:30 開船，約 2 小時</strong>，在 <strong>Pier 43½, Fisherman's Wharf</strong> 登船（出發地點）。請<strong>提前 30 分鐘（約 17:00）到碼頭報到</strong>。11 月日落約 17:00，開船時天色已暗，可欣賞<strong>點燈的金門大橋與城市夜景</strong>。")+N("前往 Pier 43½ (步行)","Pier 39","Pier 43 1/2, Fisherman's Wharf, San Francisco, CA","walking")+F("💡 提醒","海風極強，務必穿戴防風保暖衣物與毛帽！船票已訂，請先把電子票券截圖存在手機備用。")},
+{t:"約 20:00",s:1,h:"Top of the Mark 夜景",b:D("郵輪 19:30 靠岸後，從碼頭叫 Uber 過來（車程約 15–20 分鐘，約 $15–20）。週六營業到約 00:30，建議先訂位並確認當天營業時間。")+MG("碼頭 ➔ Top of the Mark","Top of the Mark, 999 California St, San Francisco")+A("約 22:30 回旅館一定要叫 Uber，不要步行。請在酒吧大廳叫車，車到了再出門。")+MG("酒吧 ➔ 住宿",HOME)}
+]},
+{id:"day4",n:4,h:"Day 4 (11/15 週日)",sub:"使命區壁畫、精品託售與嬉皮區",items:[
+{t:"09:30",h:"由 Chapter SF 出發",b:N("住宿 ➔ Clarion Alley (大眾運輸)","Chapter San Francisco","Clarion Alley, San Francisco","transit")},
+{t:"約 10:00",s:1,h:"Clarion Alley 壁畫",b:D("舊金山拉丁文化最濃的使命區 (Mission District) 街頭壁畫。")+N("壁畫 ➔ Temo's Cafe (大眾運輸)","Clarion Alley, San Francisco","Temo's Cafe, 3000 24th St, San Francisco","transit")},
+{t:"約 10:45",s:1,h:"Temo's Cafe",b:D("位於 24th St，喝咖啡後步行約 5–10 分鐘走去 Balmy Alley 壁畫巷（約 20 分鐘），再前往 Sui Generis。")+N("Temo's ➔ 託售中心 (大眾運輸)","Temo's Cafe, 3000 24th St, San Francisco","Sui Generis Designer Consignment, 2231 Market St, San Francisco","transit")+F("☕ 咖啡/早午餐","TEMO's Cafe，或 24th St 附近自選")},
+{t:"約 12:00",s:1,h:"Sui Generis 精品託售",b:D("位於 Market St (Castro 旁)，週日營業時間約 11:00–17:00。")+N("託售中心 ➔ Wasteland (大眾運輸)","Sui Generis Designer Consignment, 2231 Market St, San Francisco","Wasteland, 1660 Haight St, San Francisco","transit")+F("🍴 午餐","Castro / Market St 一帶自選")},
+{t:"約 13:15",s:1,h:"Wasteland 古著店 "+HL("必逛推薦"),b:D("超人氣的精品古著店！設計師單品與復古女裝，店內裝潢也極具特色，值得好好尋寶。Haight St 由東往西逛。")+N("Wasteland ➔ Amoeba (步行)","Wasteland, 1660 Haight St, San Francisco","Amoeba Music, 1855 Haight St, San Francisco","walking")},
+{t:"約 14:30",s:1,h:"Amoeba Music "+HL("嬉皮聖地"),b:D("巨大的獨立唱片店，感受 60 年代嬉皮士文化。每天 11:00 開門。約 16:00 從這裡搭 Uber 前往雙峰（車程約 10–15 分鐘）。")+MG("Amoeba ➔ 雙峰","Twin Peaks")},
+{t:"約 16:15",s:1,h:"雙峰 (Twin Peaks) 夕陽",b:D("360度俯瞰舊金山全景的最佳地點。<br><small>*備案：若不想上雙峰，也可選擇附近的 <strong>Bernal Heights Park</strong> 看日落與城區風景。</small>")+A("日落後觀景台又暗、人又少：看完日落（約 16:55）就離開，16:50 先叫好 Uber，不要等天全黑。")+MG("雙峰 ➔ Castro 晚餐","Super Duper Burgers Castro San Francisco")},
+{t:"約 17:30",s:1,h:"晚餐時間",b:D("與 Sui Generis 同一條街 (Market St)。")+A("晚上不搭 Muni：回程路線可能經過 Market St / Van Ness 一帶，改叫 Uber 直接送到旅館門口。")+MG("晚餐 ➔ 住宿",HOME)+F("🍔 晚餐","Super Duper Burgers (Castro)")}
+]},
+{id:"day5",n:5,h:"Day 5 (11/16 週一)",sub:"California Line 叮叮車、唐人街與機場歸途",warn:"⚠️ 航班 14:44 起飛。務必於 11:30 前離開住宿點。",items:[
+{t:"08:15",h:"由 Chapter SF 出發",b:D("步行到 California Line 西端起點站（Van Ness &amp; California），約 3–5 分鐘。")+N("住宿 ➔ Van Ness &amp; California 起點站 (步行)","Chapter San Francisco","California St & Van Ness Ave, San Francisco","walking")},
+{t:"約 08:30",s:1,h:"🚋 California Line 叮叮車 "+HL("往東搭"),b:D("在起點站上車（有座位），往東沿 California St 下坡，經過 Nob Hill，到 <strong>Grant &amp; California（唐人街）</strong>下車。<br><small>*此站不是總站售票亭，請備 $9 零錢給車掌，或先用 MuniMobile 買好票。</small>")+F("💰 票價","單程票 $9，與 Day 3 的 Powell-Hyde 線是不同線，需另外買票。")},
+{t:"約 08:45",s:1,h:"舊金山唐人街",b:D("從 Grant &amp; California 往南走兩個街區就是龍門（Grant &amp; Bush）。")+N("唐人街 ➔ 聯合廣場 (步行)","Chinatown Dragon Gate, San Francisco","Union Square, San Francisco","walking")},
+{t:"約 09:45",s:1,h:"聯合廣場 &amp; Powell St "+TL,b:N("聯合廣場 ➔ 住宿 (大眾運輸)","Union Square, San Francisco","Chapter San Francisco","transit")},
+{t:"10:30",h:"返回 Chapter SF 取行李"},
+{t:"11:30",h:"出發前往 SFO 機場",b:N("住宿 ➔ SFO 機場 (BART)","Chapter San Francisco","SFO","transit")},
+{t:"14:44",h:"搭機起飛"}
+]}
+];
 
-    function escapeHtml(str) {
-        return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    }
+/* ---------- 記帳（原功能） ---------- */
+const INITIAL_BUDGET=600, EXCHANGE_RATE=31.5;
+let expenses=[];
+try{const sv=JSON.parse(localStorage.getItem('sf_expenses'));if(Array.isArray(sv))expenses=sv.filter(e=>e&&typeof e.amount==='number'&&isFinite(e.amount));}catch(e){expenses=[];}
+const saveExpenses=()=>{try{localStorage.setItem('sf_expenses',JSON.stringify(expenses));}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function updateBudgetUI(){
+ const spent=expenses.reduce((s,x)=>s+x.amount,0),rem=INITIAL_BUDGET-spent,$=id=>document.getElementById(id),tw=v=>Math.round(v*EXCHANGE_RATE).toLocaleString();
+ $('total-budget').innerText=INITIAL_BUDGET;$('total-spent').innerText=spent.toFixed(2);$('remaining-budget').innerText=rem.toFixed(2);
+ $('total-budget-twd').innerText=tw(INITIAL_BUDGET);$('total-spent-twd').innerText=tw(spent);$('remaining-budget-twd').innerText=tw(rem);
+ document.querySelector('.budget-stats .remaining').style.color=rem<0?'#e74c3c':'#27ae60';
+ const tb=$('expense-tbody');tb.innerHTML='';
+ expenses.forEach((x,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${esc(x.name)}</td><td>$${x.amount.toFixed(2)}</td><td style="color:#666">NT$${tw(x.amount)}</td><td style="text-align:center"><button class="delete-btn-table" title="刪除" onclick="deleteExpense(${i})">×</button></td>`;tb.appendChild(tr);});
+ $('table-total-usd').innerText='$'+spent.toFixed(2);$('table-total-twd').innerText='NT$'+tw(spent);
+}
+function bad(el){el.style.borderColor='#e74c3c';setTimeout(()=>el.style.borderColor='var(--border-color)',1500);}
+function addExpense(){const n=document.getElementById('expense-name'),a=document.getElementById('expense-amount'),v=parseFloat(a.value);if(isNaN(v)||v<=0)return bad(a);expenses.push({name:n.value||'未命名',amount:v});saveExpenses();n.value='';a.value='';updateBudgetUI();}
+function deleteExpense(i){expenses.splice(i,1);saveExpenses();updateBudgetUI();}
+function addInlineExpense(btn){
+ const c=btn.closest('.inline-expense-container'),a=c.querySelector('.inline-amount'),v=parseFloat(a.value);
+ if(isNaN(v)||v<=0)return bad(a);
+ expenses.push({name:c.querySelector('.inline-name').value.trim()||'未命名',amount:v});saveExpenses();a.value='';updateBudgetUI();
+ const o=btn.innerText;btn.innerText='已記帳 ✓';btn.style.backgroundColor='#27ae60';setTimeout(()=>{btn.innerText=o;btn.style.backgroundColor='var(--secondary-color)';},1500);
+}
 
-    function updateBudgetUI() {
-        const spent = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-        const remaining = INITIAL_BUDGET - spent;
+/* ---------- 完成 / 略過 / 改時間 狀態 ---------- */
+const KEY='sf_itin_state';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){st={};}
+const saveSt=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
+const reg=[]; // {id,day,item,li,cb,tt,skipBtn,orig,prog}
+function mutate(id,fn){const s=st[id]||{};fn(s);if(!s.done&&!s.skipped&&!s.time)delete st[id];else st[id]=s;saveSt();refresh();}
+const plain=h=>{const d=document.createElement('div');d.innerHTML=h;d.querySelectorAll('.tl-tag,.highlight-tag').forEach(n=>n.remove());return d.textContent.trim();};
 
-        document.getElementById('total-budget').innerText = INITIAL_BUDGET;
-        document.getElementById('total-spent').innerText = spent.toFixed(2);
-        document.getElementById('remaining-budget').innerText = remaining.toFixed(2);
-        
-        // 更新 TWD 顯示 (toLocaleString 可加入千分位逗號，例如 17,225)
-        document.getElementById('total-budget-twd').innerText = Math.round(INITIAL_BUDGET * EXCHANGE_RATE).toLocaleString();
-        document.getElementById('total-spent-twd').innerText = Math.round(spent * EXCHANGE_RATE).toLocaleString();
-        document.getElementById('remaining-budget-twd').innerText = Math.round(remaining * EXCHANGE_RATE).toLocaleString();
+function build(){
+ const root=document.getElementById('days');
+ DAYS.forEach(day=>{
+  const card=document.createElement('div');card.className='day-card';card.id=day.id;
+  card.innerHTML=`<h2 class="day-header"><span>${day.h}</span><span>${day.sub}</span><span class="day-progress"></span></h2>`+(day.warn?`<div class="warning-wrap"><div class="warning-text">${day.warn}</div></div>`:'')+'<ul class="timeline"></ul>';
+  const ul=card.querySelector('.timeline'),prog=card.querySelector('.day-progress');
+  day.items.forEach((it,i)=>{
+   const id=day.id+'-'+i,li=document.createElement('li');li.className='timeline-item';
+   li.innerHTML=`<div class="time-col"><div class="time-row">${it.s?'<input type="checkbox" class="done-cb" aria-label="完成">':''}<span class="time-text"></span></div><div class="item-tools"><button class="edit-btn">✏️ 改時間</button><button class="skip-btn"></button></div><div class="time-editor"><input type="text" placeholder="例：約 15:30"><button class="save">儲存</button><button class="rs">還原</button></div></div><div class="content-col"><h3 class="location-title">${it.h}</h3>${it.b||''}</div>`;
+   const r={id,day,item:it,li,prog,orig:it.t,cb:li.querySelector('.done-cb'),tt:li.querySelector('.time-text'),skipBtn:li.querySelector('.skip-btn')};
+   const ed=li.querySelector('.time-editor'),inp=ed.querySelector('input');
+   if(r.cb)r.cb.addEventListener('change',()=>mutate(id,s=>{s.done=r.cb.checked;}));
+   r.skipBtn.addEventListener('click',()=>mutate(id,s=>{s.skipped=!s.skipped;if(s.skipped)s.done=false;}));
+   li.querySelector('.edit-btn').addEventListener('click',()=>{inp.value=(st[id]&&st[id].time)||it.t;ed.classList.toggle('open');});
+   ed.querySelector('.save').addEventListener('click',()=>{const v=inp.value.trim();mutate(id,s=>{if(!v||v===it.t)delete s.time;else s.time=v;});ed.classList.remove('open');});
+   ed.querySelector('.rs').addEventListener('click',()=>{mutate(id,s=>{delete s.time;});ed.classList.remove('open');});
+   ul.appendChild(li);reg.push(r);
+  });
+  root.appendChild(card);
+ });
+}
 
-        const remainingEl = document.querySelector('.budget-stats .remaining');
-        remainingEl.style.color = remaining < 0 ? '#e74c3c' : '#27ae60';
+function refresh(){
+ reg.forEach(r=>{
+  const s=st[r.id]||{};
+  r.li.classList.toggle('done',!!s.done);r.li.classList.toggle('skipped',!!s.skipped);
+  if(r.cb){r.cb.checked=!!s.done;r.cb.style.visibility=s.skipped?'hidden':'visible';}
+  r.tt.textContent=s.time||r.orig;
+  if(s.time){const g=document.createElement('span');g.className='edited-tag';g.textContent='已調整';r.tt.appendChild(g);}
+  r.skipBtn.textContent=s.skipped?'↩︎ 放回行程':'⏭️ 先跳過';r.skipBtn.classList.toggle('on',!!s.skipped);
+ });
+ DAYS.forEach(day=>{
+  const spots=reg.filter(r=>r.day===day&&r.item.s&&!(st[r.id]||{}).skipped),done=spots.filter(r=>(st[r.id]||{}).done).length;
+  const sk=reg.filter(r=>r.day===day&&r.item.s&&(st[r.id]||{}).skipped).length;
+  day.items.length&&(reg.find(r=>r.day===day).prog.textContent=`✅ 景點/餐廳完成 ${done} / ${spots.length}`+(sk?`（先跳過 ${sk}）`:''));
+ });
+ renderTodo();
+}
 
-        // 更新花費明細總表
-        const tbody = document.getElementById('expense-tbody');
-        tbody.innerHTML = '';
-        expenses.forEach((exp, index) => {
-            const tr = document.createElement('tr');
-            const twdAmount = Math.round(exp.amount * EXCHANGE_RATE).toLocaleString();
-            tr.innerHTML = `
-                <td>${escapeHtml(exp.name)}</td>
-                <td>$${exp.amount.toFixed(2)}</td>
-                <td style="color: #666;">NT$${twdAmount}</td>
-                <td style="text-align: center;"><button class="delete-btn-table" title="刪除" onclick="deleteExpense(${index})">×</button></td>
-            `;
-            tbody.appendChild(tr);
-        });
-        
-        // 更新表格底部的總計
-        document.getElementById('table-total-usd').innerText = '$' + spent.toFixed(2);
-        document.getElementById('table-total-twd').innerText = 'NT$' + Math.round(spent * EXCHANGE_RATE).toLocaleString();
-    }
+/* ---------- 未完成清單 ---------- */
+let showAll=false;
+function todayIdx(){const start=new Date(2026,10,12),n=new Date(),t=new Date(n.getFullYear(),n.getMonth(),n.getDate());return Math.round((t-start)/86400000)+1;}
+function renderTodo(){
+ const t=todayIdx(),box=document.getElementById('todo-list'),intro=document.getElementById('todo-intro');
+ const pending=r=>r.item.s&&!(st[r.id]||{}).done&&!(st[r.id]||{}).skipped;
+ const visible=DAYS.filter(d=>showAll||d.n<=t);
+ let total=0;box.innerHTML='';
+ visible.forEach(day=>{
+  const rows=reg.filter(r=>r.day===day&&pending(r));
+  if(!rows.length)return;
+  total+=rows.length;
+  const sec=document.createElement('div');sec.className='todo-day';
+  sec.innerHTML=`<h3>${day.h.replace(/\s*\(.*\)/,'')}　${day.h.match(/\((.*)\)/)[1]}${day.n<t?'（已過）':day.n===t?'（今天）':''}</h3>`;
+  rows.forEach(r=>{
+   const row=document.createElement('div');row.className='todo-row';
+   row.innerHTML=`<input type="checkbox" class="done-cb" aria-label="完成"><div class="todo-main"><b></b><small></small></div><a href="#${day.id}">看卡片</a><button>⏭️ 先跳過</button>`;
+   row.querySelector('b').textContent=plain(r.item.h);
+   row.querySelector('small').textContent='原訂 '+((st[r.id]||{}).time||r.orig);
+   row.querySelector('input').addEventListener('change',()=>mutate(r.id,s=>{s.done=true;}));
+   row.querySelector('button').addEventListener('click',()=>mutate(r.id,s=>{s.skipped=true;s.done=false;}));
+   sec.appendChild(row);
+  });
+  box.appendChild(sec);
+ });
+ const sr=reg.filter(r=>r.item.s&&(st[r.id]||{}).skipped);
+ if(sr.length){const sec=document.createElement('div');sec.className='todo-day';sec.innerHTML='<h3>⏭️ 先跳過・有空再去（'+sr.length+'）</h3>';
+  sr.forEach(r=>{const row=document.createElement('div');row.className='todo-row';row.innerHTML='<input type="checkbox" class="done-cb" aria-label="完成"><div class="todo-main"><b></b><small></small></div><a href="#'+r.day.id+'">看卡片</a><button>↩︎ 放回行程</button>';
+   row.querySelector('b').textContent=plain(r.item.h);row.querySelector('small').textContent=r.day.h.replace(/\s*\(.*\)/,'')+'・原訂 '+r.orig;
+   row.querySelector('input').addEventListener('change',()=>mutate(r.id,s=>{s.skipped=false;s.done=true;}));
+   row.querySelector('button').addEventListener('click',()=>mutate(r.id,s=>{s.skipped=false;}));sec.appendChild(row);});box.appendChild(sec);}
+ const past=DAYS.filter(d=>d.n<t).reduce((n,d)=>n+reg.filter(r=>r.day===d&&pending(r)).length,0)+sr.length;
+ const badge=document.getElementById('todo-badge');badge.textContent=past;badge.style.display=past?'inline':'none';
+ let msg=t<1?'旅程還沒開始，出發後這裡會自動列出前幾天沒完成的景點與餐廳。':t>5?'旅程已結束，以下是沒去到的地方。':`今天是 Day ${t}。這裡列出今天以前還沒勾選完成、也沒按「先跳過」的景點與餐廳；先跳過的放在下方，有空再補。`;
+ intro.innerHTML=`<div>${msg}</div><div style="margin-top:8px;font-weight:bold">待處理：${total} 個</div><button id="toggle-all" style="margin-top:10px;height:36px;font-size:13px!important;background:#e8eaee;color:var(--primary-color);width:auto">${showAll?'只看今天以前':'顯示全部天數'}</button>`;
+ document.getElementById('toggle-all').onclick=()=>{showAll=!showAll;renderTodo();};
+ if(!total&&!sr.length)box.innerHTML='<div class="todo-day"><div class="todo-empty">🎉 目前沒有未完成的項目</div></div>';
+}
 
-    function addExpense() {
-        const nameInput = document.getElementById('expense-name');
-        const amountInput = document.getElementById('expense-amount');
-        const amount = parseFloat(amountInput.value);
+/* ---------- 路由（#todo / 其他 = 行程） ---------- */
+function route(){
+ const h=location.hash.slice(1),todo=h==='todo';
+ document.getElementById('view-itin').style.display=todo?'none':'block';
+ document.getElementById('view-todo').style.display=todo?'block':'none';
+ document.getElementById('day-nav').style.display=todo?'none':'flex';
+ document.getElementById('tab-itin').classList.toggle('active',!todo);document.getElementById('tab-todo').classList.toggle('active',todo);
+ if(todo)window.scrollTo(0,0);
+ else if(/^day\d$/.test(h)){const el=document.getElementById(h);el&&el.scrollIntoView();}
+}
 
-        if (isNaN(amount) || amount <= 0) {
-            amountInput.style.borderColor = '#e74c3c';
-            setTimeout(() => amountInput.style.borderColor = 'var(--border-color)', 1500);
-            return;
-        }
+function injectInlineExpenses(){
+ document.querySelectorAll('.timeline-item .content-col').forEach(col=>{
+  const d=document.createElement('div');d.className='inline-expense-container';
+  d.innerHTML='<input type="text" class="inline-name"><div class="inline-action-row"><input type="number" class="inline-amount" placeholder="金額 ($)" step="0.01"><button onclick="addInlineExpense(this)">記一筆</button></div>';
+  d.querySelector('.inline-name').value=col.querySelector('.location-title').innerText+' ';col.appendChild(d);
+ });
+}
 
-        expenses.push({ name: nameInput.value || '未命名', amount: amount });
-        saveExpenses();
-        nameInput.value = ''; amountInput.value = '';
-        updateBudgetUI();
-    }
-
-    function deleteExpense(index) {
-        expenses.splice(index, 1);
-        saveExpenses();
-        updateBudgetUI();
-    }
-
-    function injectInlineExpenses() {
-        document.querySelectorAll('.timeline-item .content-col').forEach(col => {
-            if(col.querySelector('.inline-expense-container')) return;
-            const title = col.querySelector('.location-title').innerText;
-            const expenseDiv = document.createElement('div');
-            expenseDiv.className = 'inline-expense-container';
-            expenseDiv.innerHTML = `
-                <input type="text" class="inline-name">
-                <div class="inline-action-row">
-                    <input type="number" class="inline-amount" placeholder="金額 ($)" step="0.01">
-                    <button onclick="addInlineExpense(this)">記一筆</button>
-                </div>
-            `;
-            expenseDiv.querySelector('.inline-name').value = title + ' ';
-            col.appendChild(expenseDiv);
-        });
-    }
-
-    function addInlineExpense(btn) {
-        const container = btn.closest('.inline-expense-container');
-        const amountInput = container.querySelector('.inline-amount');
-        const amount = parseFloat(amountInput.value);
-
-        if (isNaN(amount) || amount <= 0) {
-            amountInput.style.borderColor = '#e74c3c';
-            setTimeout(() => amountInput.style.borderColor = 'var(--border-color)', 1500);
-            return;
-        }
-
-        expenses.push({ name: container.querySelector('.inline-name').value.trim() || '未命名', amount: amount });
-        saveExpenses();
-        amountInput.value = '';
-        updateBudgetUI();
-        
-        const origText = btn.innerText;
-        btn.innerText = '已記帳 ✓'; btn.style.backgroundColor = '#27ae60';
-        setTimeout(() => { btn.innerText = origText; btn.style.backgroundColor = 'var(--secondary-color)'; }, 1500);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        updateBudgetUI();
-        injectInlineExpenses();
-    });
+document.addEventListener('DOMContentLoaded',()=>{
+ build();injectInlineExpenses();updateBudgetUI();refresh();
+ document.getElementById('reset-all').addEventListener('click',()=>{if(confirm('確定要清除所有完成、略過與時間調整嗎？')){st={};saveSt();refresh();}});
+ window.addEventListener('hashchange',route);route();
+});
 </script>
 </body>
 </html>
